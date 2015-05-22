@@ -20,4 +20,3 @@ app.controller('scan', ['$scope','$mdSidenav','QRService', function($scope, $mdS
         console.log('hey, myVar has changed!');
     });
 }]);
-

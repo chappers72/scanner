@@ -1,0 +1,11 @@
+/**
+ * Created by StevenChapman on 19/05/15.
+ */
+chrome.app.runtime.onLaunched.addListener(function() {
+    chrome.app.window.create('window.html', {
+        'bounds': {
+            'width': 1000,
+            'height': 1000
+        }
+    });
+});

@@ -13,7 +13,6 @@ app.service('QRService', function(){
     var v = null;
     var vidhtml = '<video id="v" autoplay></video>';
     this.res=null;
-
     this.qrservice = function(){
         load();
     }

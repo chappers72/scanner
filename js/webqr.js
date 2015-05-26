@@ -108,7 +108,7 @@ function setwebcam() {
         moz = true;
         n.mozGetUserMedia({video: true, audio: false}, success, error);
     }
-
+    
     stype = 1;
     setTimeout(captureToCanvas, 500);
 }

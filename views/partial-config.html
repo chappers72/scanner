@@ -1,0 +1,21 @@
+<!--partial-config.tpml-->
+<div id="mainbody">
+    <md-content layout-padding style="height: 600px;padding: 24px;">
+        <h1>Configuration Settings</h1>
+        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire mediocrem at, in lobortis conclusionemque
+            nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro
+            labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans
+            no. Sed laudem aliquam ne.</p>
+
+        <p>
+        <md-select class="lgText" ng-model="station">
+            <md-option ng-repeat="item in items" value="{{item.val}}">{{item.val}}</md-option>
+        </md-select>
+        <br /><br />
+        <hr />
+        <br />
+        <md-button class="md-raised full-width" ng-click="saveStation({'station' : station})" style="margin-bottom: 25px">
+            <h3>Save</h3>
+        </md-button>
+    </md-content>
+</div>

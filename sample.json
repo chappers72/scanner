@@ -5,6 +5,7 @@
     "source": "Birmingham",
     "orthotist": "JoDavies512",
     "customer": "TAMESIDEGENERALHOSPITAL",
-    "reqdate": "15/01/2015"
+    "reqdate": "15/01/2015",
+    "status" : "Scanning Room"
   }
 }

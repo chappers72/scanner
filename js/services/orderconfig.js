@@ -2,7 +2,7 @@
  * Created by Mark on 26/05/2015.
  */
 var app = angular.module('scanner');
-app.service('orderconfig',['$http', function ($http) {
+app.service('orderconfig',['$http','GENERAL_CONFIG', function ($http,GENERAL_CONFIG) {
 
     //CHECK ORDER
     this.checkOrder = function (orderid) {
@@ -13,8 +13,8 @@ app.service('orderconfig',['$http', function ($http) {
                 'orderid': orderid,
                 'command': 'check'
             },
-            //url: GENERAL_CONFIG.API_URL
-            url: 'http://31.49.241.45/org/orderconfig.nsf/data.xsp'
+            url: GENERAL_CONFIG.API_URL
+            //url: 'http://31.49.241.45/org/orderconfig.nsf/data.xsp'
         });
     };
 

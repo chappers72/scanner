@@ -7,14 +7,13 @@
             labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans
             no. Sed laudem aliquam ne.</p>
 
-        <p>
+
         <md-select class="lgText" ng-model="station">
             <md-option ng-repeat="item in items" value="{{item.val}}">{{item.val}}</md-option>
         </md-select>
         <br /><br />
-        <hr />
-        <br />
-        <md-button class="md-raised full-width" ng-click="saveStation({'station' : station})" style="margin-bottom: 25px">
+        <br /><br />
+        <md-button class="md-raised full-width" ng-click="saveStation({'station' : station})" style="margin: 25px 0px">
             <h3>Save</h3>
         </md-button>
     </md-content>

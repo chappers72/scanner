@@ -1,6 +1,7 @@
 <!--partial-scan-result.html-->
 <div id="mainbody">
-      <table md-colresize="md-colresize" class="md-table">
+    {{item}}
+    <table md-colresize="md-colresize" class="md-table">
         <thead>
         <tr class="md-table-headers-row">
             <th class="md-table-header">
@@ -13,8 +14,8 @@
         </thead>
         <tbody>
         <tr class="md-table-content-row">
-        <td class="md-table-content grey">Order Reference</td>
-        <td class="md-table-content">{{item.orderid}}</td>
+            <td class="md-table-content grey">Order Reference</td>
+            <td class="md-table-content">{{item.orderid}}</td>
         </tr>
         <tr class="md-table-content-row">
             <td class="md-table-content grey">Order Type</td>
@@ -22,17 +23,26 @@
         </tr>
         <tr class="md-table-content-row">
             <td class="md-table-content grey">Source</td>
-        <td class="md-table-content">{{item.source}}</td>
+            <td class="md-table-content">{{item.source}}</td>
         </tr>
         <tr class="md-table-content-row">
             <td class="md-table-content grey">Orthotist</td>
-        <td class="md-table-content">{{item.orthotist}}</td>
+            <td class="md-table-content">{{item.orthotist}}</td>
         </tr>
         <tr class="md-table-content-row">
             <td class="md-table-content grey">Customer</td>
-        <td class="md-table-content">{{item.customer}}</td>
+            <td class="md-table-content">{{item.customer}}</td>
         </tr>
         </tbody>
     </table>
+    <div layout="row" layout-margin layout-fill layout-padding>
+        <div flex>
+            <md-button ng-hide="" class="md-raised md-primary full-width"><h3>Confirm Order In</h3></md-button>
+            <md-button class="md-raised md-primary full-width"><h3>Confirm Order Out</h3></md-button>
+        </div>
+        <div flex>
+            <md-button class="md-raised md-warn full-width"><h3>Wrong Order - Re Scan</h3></md-button>
+        </div>
+    </div>
 
 </div>

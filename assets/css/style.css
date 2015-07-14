@@ -6,24 +6,22 @@
     height: 100%
 }
 
-
 .md-table {
     min-width: 100%;
     border-collapse: collapse;
 }
 
 .md-table tbody tr:hover, .md-table tbody tr:focus {
-    background-color:rgba(63,81,181,0.2);
+    background-color: rgba(63, 81, 181, 0.2);
 }
 
 .md-table-header {
-    border-bottom: 1px solid rgb(230,230,230);
-    color: rgb(130,130,130);
+    border-bottom: 1px solid rgb(230, 230, 230);
+    color: rgb(130, 130, 130);
     text-align: left;
     font-weight: 700;
     padding: 16px 16px 16px 0;
 }
-
 
 .md-table-content {
     white-space: nowrap;
@@ -34,4 +32,12 @@
 .grey {
     color: grey;
 }
-.lgText{font-size: 2em}
+
+.lgText {
+    font-size: 2em
+}
+
+.versionText {
+    position: absolute;
+    bottom: 5px
+}

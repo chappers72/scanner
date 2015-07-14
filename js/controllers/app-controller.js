@@ -3,25 +3,31 @@
  */
 var app = angular.module('scanner');
 
-app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state','orderconfig', function ($scope, $mdSidenav, qrfactory, $state, orderconfig) {
+app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'orderconfig', function ($scope, $mdSidenav, qrfactory, $state, orderconfig) {
     $scope.$on('$stateChangeSuccess', function (event, toState) {
         if (toState.name === 'scan-result') {
             $scope.back = true;
         }
     });
+    $scope.user;
     $scope.$on('$viewContentLoaded',
         function (event, viewConfig) {
-            if ($state.current.name=='scan') {
+            if ($state.current.name == 'scan') {
                 qrfactory.scan().then(function (_data) {
                     $scope.qrresult = _data;
                 });
             }
-            ;
         });
 
     chrome.storage.local.get('station', function (data) {
         $scope.station = data.station;
     });
+    chrome.storage.local.get('user', function (data) {
+        $scope.user = data.user;
+    });
+    $scope.version = chrome.runtime.getManifest().version;
+
+
     $scope.toggleSidenav = toggleSidenav;
     $scope.menuItems = [{title: 'scan'}, {title: 'manual'}, {title: 'settings'}]
     function toggleSidenav(name) {
@@ -36,18 +42,17 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state','orderconf
     $scope.$watch(
         "qrresult",
         function (newValue, oldValue) {
-            if ($scope.qrresult)
-                $state.go('scan-result')
+            if ($scope.qrresult);
+            $state.go('scan-result');
         }
     );
 
     $scope.changestate = function (s) {
         $state.go(s);
-        orderconfig.checkOrder('ROHH-95YM6Q');
     }
 
     //Config code
-    $scope.saveStation = function (val) {
+    $scope.saveConfig = function (val) {
         // Check that there's some code there.
         if (!val) {
             message('Error: No value specified');
@@ -55,6 +60,7 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state','orderconf
         }
         // Save it using the Chrome extension storage API.
         chrome.storage.local.set({'station': val.station});
+        chrome.storage.local.set({'user': val.user});
     }
 
 

@@ -6,14 +6,20 @@
             nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro
             labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans
             no. Sed laudem aliquam ne.</p>
-
-
+        <md-input-container>
+            <label>Username</label>
+            <input type="text" ng-model="user.name">
+        </md-input-container>
+        <md-input-container>
+            <label>Password</label>
+            <textarea ng-model="user.password"></textarea>
+        </md-input-container>
         <md-select class="lgText" ng-model="station">
-            <md-option ng-repeat="item in items" value="{{item.val}}">{{item.val}}</md-option>
+            <md-option ng-repeat="item in items| filter:'!QA Reject'" value="{{item.stage}}">{{item.stage}}</md-option>
         </md-select>
         <br /><br />
         <br /><br />
-        <md-button class="md-raised full-width" ng-click="saveStation({'station' : station})" style="margin: 25px 0px">
+        <md-button class="md-raised full-width" ng-click="saveConfig({'station' : station , 'user':{'name':user.name,'password':user.password}})" style="margin: 25px 0px">
             <h3>Save</h3>
         </md-button>
     </md-content>

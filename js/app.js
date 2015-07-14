@@ -20,14 +20,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: function ($scope, promiseObj) {
                 // You can be sure that promiseObj is ready to use!
                 $scope.config = {};
-                $scope.items = promiseObj;
+                $scope.items = promiseObj.data;
             },
             resolve: {
-                promiseObj: function ($http) {
-                    return [{val: "Scanning Room", key: '0'}, {val: "Production", key: '1'}, {
-                        val: "Q.A. Inspection",
-                        key: '2'
-                    }, {val: "Delivery", key: '3'}];
+                promiseObj: function (orderconfig) {
+                    return orderconfig.getStages();
                 }
             }
 
@@ -40,9 +37,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 $scope.item = promiseObj.data.order;
             },
             resolve: {
-                promiseObj: function ($http) {
+                promiseObj: function (orderid,orderconfig) {
                     // $http returns a promise for the url data
-                    return $http({method: 'GET', url: '/sample.json'});
+                    return orderconfig.checkOrder(orderid.getOrderId());
+                    //return $http({method: 'GET', url: '/sample.json'});
                 }
             }
         });
@@ -53,6 +51,7 @@ angular.module('http-post-fix', [], function ($httpProvider) {
 
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+    $httpProvider.defaults.headers.common.Authorization = 'Basic '+window.btoa("Test User:password");
 
     // Override $http service's default transformRequest
     $httpProvider.defaults.transformRequest = [function (data) {

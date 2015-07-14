@@ -2,7 +2,9 @@
  * Created by StevenChapman on 26/05/15.
  */
 var app = angular.module('scanner');
-app.factory('qrfactory', function ($q, $timeout) {
+app.factory('qrfactory', function ($q, $timeout, orderid) {
+
+
     var scan = function () {
         var defered = $q.defer();
         var gCtx = null;
@@ -43,15 +45,15 @@ app.factory('qrfactory', function ($q, $timeout) {
                     }
                     catch (e) {
                         console.log(e);
-                        if(this.res!==true)
-                        setTimeout(captureToCanvas, 500);
+                        if (this.res !== true)
+                            setTimeout(captureToCanvas, 500);
                     }
                     ;
                 }
                 catch (e) {
                     console.log(e);
-                    if(this.res!==true)
-                    setTimeout(captureToCanvas, 500);
+                    if (this.res !== true)
+                        setTimeout(captureToCanvas, 500);
                 }
                 ;
             }
@@ -64,6 +66,7 @@ app.factory('qrfactory', function ($q, $timeout) {
         function read(a) {
             if (htmlEntities(a)) {
                 defered.resolve(htmlEntities(a));
+                orderid.setOrderId(a)
                 return;
             }
         }

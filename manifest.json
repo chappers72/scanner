@@ -19,6 +19,7 @@
   },
   "permissions": [
     "videoCapture",
-    "storage"
+    "storage",
+    "http://31.49.241.45/"
   ]
 }

@@ -6,15 +6,14 @@ app.service('orderconfig',['$http','GENERAL_CONFIG', function ($http,GENERAL_CON
 
     //CHECK ORDER
     this.checkOrder = function (orderid) {
-        console.log(GENERAL_CONFIG);
         return $http({
             method: 'POST',
             data: {
                 'orderid': orderid,
                 'command': 'check'
             },
+
             url: GENERAL_CONFIG.API_URL
-            //url: 'http://31.49.241.45/org/orderconfig.nsf/data.xsp'
         });
     };
 
@@ -53,5 +52,15 @@ app.service('orderconfig',['$http','GENERAL_CONFIG', function ($http,GENERAL_CON
             url: GENERAL_CONFIG.API_URL
         });
     };
+
+    this.getStages = function(){
+        return $http({
+            method: 'POST',
+            data: {
+                'command': 'getstages'
+            },
+            url: GENERAL_CONFIG.API_URL
+        });
+    }
 
 }])

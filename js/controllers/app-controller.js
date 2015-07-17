@@ -7,6 +7,7 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'ordercon
     $scope.$on('$stateChangeSuccess', function (event, toState) {
         if (toState.name === 'scan-result') {
             $scope.back = true;
+            $scope.stageIn= false;
         }
     });
     $scope.user;

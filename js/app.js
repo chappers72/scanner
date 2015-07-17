@@ -1,7 +1,7 @@
 /**
  * Created by StevenChapman on 19/05/15.
  */
-var app = angular.module('scanner', ['ngMaterial', 'ngMdIcons', 'ui.router','http-post-fix','scanner.config']);
+var app = angular.module('scanner', ['ngMaterial', 'ngMdIcons', 'ui.router', 'http-post-fix', 'scanner.config']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/scan-home');
@@ -37,7 +37,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 $scope.item = promiseObj.data.order;
             },
             resolve: {
-                promiseObj: function (orderid,orderconfig) {
+                promiseObj: function (orderid, orderconfig) {
                     // $http returns a promise for the url data
                     return orderconfig.checkOrder(orderid.getOrderId());
                     //return $http({method: 'GET', url: '/sample.json'});
@@ -51,7 +51,7 @@ angular.module('http-post-fix', [], function ($httpProvider) {
 
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-    $httpProvider.defaults.headers.common.Authorization = 'Basic '+window.btoa("Test User:password");
+    $httpProvider.defaults.headers.common.Authorization = 'Basic ' + window.btoa("Test User:password");
 
     // Override $http service's default transformRequest
     $httpProvider.defaults.transformRequest = [function (data) {

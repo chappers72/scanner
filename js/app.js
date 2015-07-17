@@ -14,6 +14,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: '/scan',
             templateUrl: 'views/partial-scan.html',
         })
+        .state('manual', {
+            url: '/manual',
+            templateUrl: 'views/partial-manual.html'
+        })
         .state('settings', {
             url: '/config',
             templateUrl: 'views/partial-config.html',
@@ -32,15 +36,17 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('scan-result', {
             url: '/scan-result',
             templateUrl: 'views/partial-scan-result.html',
-            controller: function ($scope, promiseObj) {
+            controller: function ($scope, promiseObj,orderid) {
                 // You can be sure that promiseObj is ready to use!
                 $scope.item = promiseObj.data.order;
+                $scope.stageIn = orderid.setStatus(promiseObj.data.order.stageInformation, $scope.station);
             },
             resolve: {
                 promiseObj: function (orderid, orderconfig) {
                     // $http returns a promise for the url data
+                    //production
                     return orderconfig.checkOrder(orderid.getOrderId());
-                    //return $http({method: 'GET', url: '/sample.json'});
+
                 }
             }
         });

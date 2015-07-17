@@ -13,6 +13,19 @@ app.service('orderid',['$http', function ($http) {
         return this.orderid;
     };
 
+    //Set stage status
+    this.setStatus = function(_data,station){
+        for (i = 0; i < _data.length; i++) {
+            if(station==_data[i].stageName){
+                if(_data[i].in===''){
+                    return true;
+                }else{
+                    return false;
+                }
+            };
+        }
 
+        return 'ok';
+    }
 
 }])

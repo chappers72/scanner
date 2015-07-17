@@ -3,11 +3,10 @@
  */
 var app = angular.module('scanner');
 
-app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'orderconfig', function ($scope, $mdSidenav, qrfactory, $state, orderconfig) {
+app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'orderconfig', '$http','orderid', function ($scope, $mdSidenav, qrfactory, $state, orderconfig, $http,orderid) {
     $scope.$on('$stateChangeSuccess', function (event, toState) {
         if (toState.name === 'scan-result') {
             $scope.back = true;
-            $scope.stageIn= false;
         }
     });
     $scope.user;
@@ -48,8 +47,22 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'ordercon
         }
     );
 
+
     $scope.changestate = function (s) {
         $state.go(s);
+    };
+
+    $scope.lookupOrder = function (a) {
+        orderid.setOrderId(a);
+        $state.go('scan-result');
+    };
+
+    $scope.scanIn = function(a){
+        $scope.scanresult=orderconfig.orderIn(a,$scope.station);
+    };
+
+    $scope.scanOut = function(a){
+        $scope.scanresult=orderconfig.orderIn(a,$scope.station);
     }
 
     //Config code
@@ -63,7 +76,5 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'ordercon
         chrome.storage.local.set({'station': val.station});
         chrome.storage.local.set({'user': val.user});
     }
-
-
     //End config code
 }]);

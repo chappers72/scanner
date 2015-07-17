@@ -1,9 +1,7 @@
 <!--partial-scan-result.html-->
 <div id="mainbody">
     {{item.stageInformation}}
-    {{stageInfo}}
-    {{stageIn}}
-    {{stageOut}}
+
     <div ng-show="stageIn">some stuff</div>
     <h1>You are working in: {{station}}</h1>
     <table md-colresize="md-colresize" class="md-table">
@@ -42,12 +40,12 @@
     </table>
     <div layout="row" layout-margin layout-fill layout-padding>
         <div flex>
-            <md-button ng-show="stageIn" class="md-raised md-primary full-width"><h3>Confirm Order In</h3></md-button>
-            <md-button ng-hide="stageIn" class="md-raised md-primary full-width"><h3>Confirm Order Out</h3></md-button>
+            <md-button ng-show="stageIn" ng-click="scanIn(item.orderid)" class="md-raised md-primary full-width"><h3>Confirm Order In</h3></md-button>
+            <md-button ng-hide="stageIn" ng-click="scanOut(item.orderid)" class="md-raised md-primary full-width"><h3>Confirm Order Out</h3></md-button>
         </div>
         <div flex>
-            <md-button class="md-raised md-warn full-width"><h3>Wrong Order - Re Scan</h3></md-button>
+            <md-button ng-click="changestate('scan home')" class="md-raised md-warn full-width"><h3>Wrong Order - Re Scan</h3></md-button>
         </div>
     </div>
-
+{{scanresult}}
 </div>

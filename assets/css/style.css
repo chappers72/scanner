@@ -41,3 +41,7 @@
     position: absolute;
     bottom: 5px
 }
+.ng-cloak, .x-ng-cloak,
+.ng-hide:not(.ng-hide-animate) {
+    display: none !important;
+}

@@ -8,3 +8,4 @@ To do:
 6. Add icons to buttons.
 7. Make table look nicer
 8. Fix 're-scan' set up.
+9. Code audit

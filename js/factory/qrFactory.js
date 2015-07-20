@@ -4,6 +4,10 @@
 var app = angular.module('scanner');
 app.factory('qrfactory', function ($q, $timeout, orderid) {
 
+    var reset = function(){
+        console.log('reset');
+        this.res = false;
+    }
 
     var scan = function () {
         var defered = $q.defer();
@@ -90,6 +94,7 @@ app.factory('qrfactory', function ($q, $timeout, orderid) {
         }
 
         function load() {
+            this.res = false;
             initCanvas(800, 600);
             qrcode.callback = read;
             setwebcam();
@@ -124,6 +129,7 @@ app.factory('qrfactory', function ($q, $timeout, orderid) {
     };
 
     return {
-        scan: scan
+        scan: scan,
+        reset: reset
     };
 })

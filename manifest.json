@@ -20,6 +20,7 @@
   "permissions": [
     "videoCapture",
     "storage",
-    "http://31.49.241.45/"
+    "http://31.49.241.45/",
+    "http://cdnjs.cloudflare.com/"
   ]
 }

@@ -3,18 +3,20 @@
  */
 var app = angular.module('scanner');
 
-app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'orderconfig', '$http','orderid', function ($scope, $mdSidenav, qrfactory, $state, orderconfig, $http,orderid) {
+app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'orderconfig', '$http', 'orderid', function ($scope, $mdSidenav, qrfactory, $state, orderconfig, $http, orderid) {
     $scope.$on('$stateChangeSuccess', function (event, toState) {
         if (toState.name === 'scan-result') {
             $scope.back = true;
         }
     });
-    $scope.user;
+    $scope.qr = {};
     $scope.$on('$viewContentLoaded',
         function (event, viewConfig) {
             if ($state.current.name == 'scan') {
+                qrfactory.reset();
                 qrfactory.scan().then(function (_data) {
-                    $scope.qrresult = _data;
+                    $scope.qr.qrresult = _data;
+                    $state.go('scan-result');
                 });
             }
         });
@@ -36,33 +38,59 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'ordercon
 
     $scope.loadMe = function () {
         qrfactory.scan().then(function (_data) {
-            $scope.qrresult = _data;
+            $scope.qr.qrresult = _data;
         });
     }
-    $scope.$watch(
-        "qrresult",
-        function (newValue, oldValue) {
-            if ($scope.qrresult);
-            $state.go('scan-result');
-        }
-    );
-
 
     $scope.changestate = function (s) {
         $state.go(s);
     };
 
+    $scope.resetScanMessage = function () {
+        $scope.scanErr = false;
+        $scope.scanSucc = false;
+    };
+
+    $scope.resetManualMessage = function () {
+        $scope.manualerr = false;
+    }
+
+
+
     $scope.lookupOrder = function (a) {
+        $scope.manualerr = false;
+        if(a===''){
+            $scope.manualerr = true;
+            return;
+        }
         orderid.setOrderId(a);
         $state.go('scan-result');
     };
 
-    $scope.scanIn = function(a){
-        $scope.scanresult=orderconfig.orderIn(a,$scope.station);
+    $scope.scanIn = function (a) {
+        orderconfig.orderIn(a, $scope.station)
+            .then(function (_data) {
+                $scope.scanErr = false;
+                $scope.scanSucc = true;
+                $scope.scanresult = 'Thank you. Your item has been scanned in and updated successfully.';
+            }, function (err) {
+                $scope.scanErr = true;
+                $scope.scanSucc = false;
+                $scope.scanresult = err.statusText;
+            });
     };
 
-    $scope.scanOut = function(a){
-        $scope.scanresult=orderconfig.orderIn(a,$scope.station);
+    $scope.scanOut = function (a) {
+        orderconfig.orderOut(a, $scope.station)
+            .then(function (_data) {
+                $scope.scanErr = false;
+                $scope.scanSucc = true;
+                $scope.scanresult = 'Thank you. Your item has been scanned out and updated succesfully.';
+            }, function (err) {
+                $scope.scanErr = true;
+                $scope.scanSucc = false;
+                $scope.scanresult = err.statusText;
+            });
     }
 
     //Config code
@@ -75,6 +103,7 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'ordercon
         // Save it using the Chrome extension storage API.
         chrome.storage.local.set({'station': val.station});
         chrome.storage.local.set({'user': val.user});
+        $scope.changestate('scan home');
     }
     //End config code
 }]);

@@ -2,7 +2,7 @@
  * Created by Mark on 26/05/2015.
  */
 var app = angular.module('scanner');
-app.service('orderconfig',['$http','GENERAL_CONFIG', function ($http,GENERAL_CONFIG) {
+app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_CONFIG) {
 
     //CHECK ORDER
     this.checkOrder = function (orderid) {
@@ -18,15 +18,15 @@ app.service('orderconfig',['$http','GENERAL_CONFIG', function ($http,GENERAL_CON
     };
 
     this.orderIn = function (orderid, stage) {
-        return $http({
+       return $http({
             method: 'POST',
             data: {
                 'orderid': orderid,
                 'command': 'in',
-                'stage': stage
+                'stage': stage.toLowerCase()
             },
             url: GENERAL_CONFIG.API_URL
-        });
+        })
     };
 
     this.orderOut = function (orderid, stage) {
@@ -35,7 +35,7 @@ app.service('orderconfig',['$http','GENERAL_CONFIG', function ($http,GENERAL_CON
             data: {
                 'orderid': orderid,
                 'command': 'out',
-                'stage': stage
+                'stage': stage.toLowerCase()
             },
             url: GENERAL_CONFIG.API_URL
         });
@@ -47,13 +47,13 @@ app.service('orderconfig',['$http','GENERAL_CONFIG', function ($http,GENERAL_CON
             data: {
                 'orderid': orderid,
                 'command': 'outreject',
-                'stage': stage
+                'stage': stage.toLowerCase()
             },
             url: GENERAL_CONFIG.API_URL
         });
     };
 
-    this.getStages = function(){
+    this.getStages = function () {
         return $http({
             method: 'POST',
             data: {

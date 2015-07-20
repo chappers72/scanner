@@ -45,3 +45,7 @@
 .ng-hide:not(.ng-hide-animate) {
     display: none !important;
 }
+.err{background-color: #FF3300}
+.err h2{color: white}
+.succ{background-color: #339933 !important}
+.succ h2{color: white}

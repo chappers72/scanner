@@ -13,7 +13,7 @@
                 <ng-md-icon icon="menu"></ng-md-icon>
             </md-button>
             <h1>
-                Production Tracker
+                Production Tracker - <span ng-show="station">{{station}} Station</span><span ng-show="station==''">No station set</span>
             </h1>
             <span flex></span>
             <md-button class="mg-fab" aria-label="Open Settings" ng-click="changestate('settings')">

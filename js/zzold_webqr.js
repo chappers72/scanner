@@ -35,7 +35,7 @@ function captureToCanvas() {
             gCtx.drawImage(v, 0, 0);
             try {
                 qrcode.decode();
-                document.getElementById("outdiv").style.display = "none";
+                //document.getElementById("outdiv").style.display = "none";
             }
             catch (e) {
                 console.log(e);

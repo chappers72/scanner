@@ -18,14 +18,14 @@ app.service('orderid',['$http', function ($http) {
         for (i = 0; i < _data.length; i++) {
             if(station==_data[i].stageName){
                 if(_data[i].in===''){
-                    return true;
+                    return 'in';
+                }else if(_data[i].out===''){
+                    return 'out';
                 }else{
-                    return false;
+                    return 'none'
                 }
             };
         }
-
-        return 'ok';
     }
 
 }])

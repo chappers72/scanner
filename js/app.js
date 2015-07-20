@@ -39,7 +39,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: function ($scope, promiseObj,orderid) {
                 // You can be sure that promiseObj is ready to use!
                 $scope.item = promiseObj.data.order;
-                $scope.stageIn = orderid.setStatus(promiseObj.data.order.stageInformation, $scope.station);
+                $scope.stageStatus = orderid.setStatus(promiseObj.data.order.stageInformation, $scope.station);
             },
             resolve: {
                 promiseObj: function (orderid, orderconfig) {

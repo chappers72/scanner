@@ -15,11 +15,14 @@ app.service('orderid',['$http', function ($http) {
 
     //Set stage status
     this.setStatus = function(_data,station){
-        for (i = 0; i < _data.length; i++) {
-            if(station==_data[i].stageName){
-                if(_data[i].in===''){
+        if(_data ==''){
+            return 'error';
+        }
+        for (i = 0; i < _data.stageInformation.length; i++) {
+            if(station==_data.stageInformation[i].stageName){
+                if(_data.stageInformation[i].in===''){
                     return 'in';
-                }else if(_data[i].out===''){
+                }else if(_data.stageInformation[i].out===''){
                     return 'out';
                 }else{
                     return 'none'

@@ -12,9 +12,9 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
                 'orderid': orderid,
                 'command': 'check'
             },
-
+            timeout: 5000,
             url: GENERAL_CONFIG.API_URL
-        });
+        })
     };
 
     this.orderIn = function (orderid, stage) {
@@ -61,6 +61,10 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
             },
             url: GENERAL_CONFIG.API_URL
         });
+    }
+    this.resetConnectionError = function(){
+        console.log('reset')
+        $scope.connectionError = false;
     }
 
 }])

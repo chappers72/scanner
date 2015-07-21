@@ -3,10 +3,12 @@
  */
 var app = angular.module('scanner');
 
-app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'orderconfig', '$http', 'orderid', function ($scope, $mdSidenav, qrfactory, $state, orderconfig, $http, orderid) {
+app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'orderconfig', '$http', 'orderid','$timeout', function ($scope, $mdSidenav, qrfactory, $state, orderconfig, $http, orderid, $timeout) {
     $scope.$on('$stateChangeSuccess', function (event, toState) {
         if (toState.name === 'scan-result') {
             $scope.back = true;
+        }else if (toState.name === 'scan home') {
+            $scope.stageStatus = '';
         }
     });
     $scope.qr = {};
@@ -44,22 +46,19 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'ordercon
 
     $scope.changestate = function (s) {
         $state.go(s);
+        $mdSidenav('left').close();
     };
 
-    $scope.resetScanMessage = function () {
-        $scope.scanErr = false;
-        $scope.scanSucc = false;
-    };
+
 
     $scope.resetManualMessage = function () {
         $scope.manualerr = false;
     }
 
 
-
     $scope.lookupOrder = function (a) {
         $scope.manualerr = false;
-        if(a===''){
+        if (a === '') {
             $scope.manualerr = true;
             return;
         }
@@ -106,4 +105,5 @@ app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'ordercon
         $scope.changestate('scan home');
     }
     //End config code
+
 }]);

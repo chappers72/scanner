@@ -5,7 +5,6 @@ var app = angular.module('scanner');
 app.factory('qrfactory', function ($q, $timeout, orderid) {
 
     var reset = function(){
-        console.log('reset');
         this.res = false;
     }
 

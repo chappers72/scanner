@@ -1,6 +1,15 @@
 <!--partial-config.tpml-->
 <div id="mainbody">
-    <md-content layout-padding style="height: 600px;padding: 24px;">
+    <div layout="row" layout-margin layout-fill layout-padding ng-show="items.networkerror" class="err">
+        <div flex="90">
+            <h2>Network connection is not available. Please contact support.</h2>
+        </div>
+        <div flex>
+            <ng-md-icon ng-click="resetManualMessage()" icon="close"
+                        style="fill: white; float: right;cursor: pointer"></ng-md-icon>
+        </div>
+    </div>
+    <md-content layout-padding style="height: 600px;padding: 24px;" ng-hide="items.networkerror">
         <h1>Configuration Settings</h1>
         <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire mediocrem at, in lobortis conclusionemque
             nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro

@@ -8,11 +8,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('scan home', {
             url: '/scan-home',
-            templateUrl: 'views/partial-scan-home.html',
+            templateUrl: 'views/partial-scan-home.html'
         })
         .state('scan', {
             url: '/scan',
-            templateUrl: 'views/partial-scan.html',
+            templateUrl: 'views/partial-scan.html'
         })
         .state('manual', {
             url: '/manual',
@@ -20,7 +20,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('settings', {
             url: '/config',
-            templateUrl: 'views/partial-config.html',
+            templateUrl: 'views/partial-settings.html',
             controller: function ($scope, promiseObj) {
                 // You can be sure that promiseObj is ready to use!
                 $scope.config = {};
@@ -28,15 +28,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             },
             resolve: {
                 promiseObj: function (orderconfig) {
-                    return orderconfig.getStages();
+                    return orderconfig.getStages().then(function (_data) {
+                        return _data;
+                    }, function (err) {
+                       return {'data':{'networkerror':'true'}}
+                    });
+
                 }
             }
-
         })
         .state('scan-result', {
             url: '/scan-result',
             templateUrl: 'views/partial-scan-result.html',
-            controller: function ($scope, promiseObj,orderid) {
+            controller: function ($scope, promiseObj, orderid) {
                 // You can be sure that promiseObj is ready to use!
                 $scope.item = promiseObj.data.order;
                 $scope.stageStatus = orderid.setStatus(promiseObj.data.order.stageInformation, $scope.station);

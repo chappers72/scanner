@@ -1,14 +1,16 @@
 /**
  * Created by StevenChapman on 26/05/15.
+ * This function looks for a result (res) and continus to check an output div for a result from the qr reader code contained in qrcode.js
  */
 var app = angular.module('scanner');
 app.factory('qrfactory', function ($q, $timeout, orderid) {
 
+    //This resets the 'res' so that we can clear the state of having a result.
     var reset = function(){
-        console.log('reset');
         this.res = false;
-    }
+    };
 
+    //Parent function which returns for the deferred promise. The load function is called to start the process of looking for a result.
     var scan = function () {
         var defered = $q.defer();
         var gCtx = null;
@@ -22,6 +24,7 @@ app.factory('qrfactory', function ($q, $timeout, orderid) {
         var vidhtml = '<video id="v" autoplay></video>';
         this.res = false;
 
+        //This function is called by doScan method and starts the process
         load();
 
         function initCanvas(w, h) {
@@ -63,18 +66,21 @@ app.factory('qrfactory', function ($q, $timeout, orderid) {
             }
         }
 
+        //Strips out html from resulting scan
         function htmlEntities(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
+        //Reads result, sets orderid in service as constant and returns final result.
         function read(a) {
             if (htmlEntities(a)) {
                 defered.resolve(htmlEntities(a));
-                orderid.setOrderId(a)
+                orderid.setOrderId(a);
                 return;
             }
         }
 
+        //Streams webcam output to screen
         function success(stream) {
             if (webkit)
                 v.src = window.webkitURL.createObjectURL(stream);
@@ -101,6 +107,7 @@ app.factory('qrfactory', function ($q, $timeout, orderid) {
             return;
         }
 
+        //Gets hold of the OS webcam.
         function setwebcam() {
             if (stype == 1) {
                 setTimeout(captureToCanvas, 500);

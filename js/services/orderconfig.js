@@ -12,7 +12,6 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
                 'orderid': orderid,
                 'command': 'check'
             },
-
             url: GENERAL_CONFIG.API_URL
         });
     };

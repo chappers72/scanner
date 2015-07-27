@@ -31,9 +31,5 @@ app.service('orderid',['$http', function ($http) {
         }
     };
 
-    //Set network status
-    this.setNetworkStatus = function(t){
-        return t;
-    }
 
 }])

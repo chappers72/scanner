@@ -6,27 +6,8 @@
     height: 100%
 }
 
-.md-table {
-    min-width: 100%;
-    border-collapse: collapse;
-}
-
-.md-table tbody tr:hover, .md-table tbody tr:focus {
-    background-color: rgba(63, 81, 181, 0.2);
-}
-
-.md-table-header {
-    border-bottom: 1px solid rgb(230, 230, 230);
-    color: rgb(130, 130, 130);
-    text-align: left;
-    font-weight: 700;
-    padding: 16px 16px 16px 0;
-}
-
-.md-table-content {
-    white-space: nowrap;
-    padding: 16px 16px 16px 0;
-    height: 72px;
+.results-table td {
+    vertical-align: top
 }
 
 .grey {
@@ -41,11 +22,32 @@
     position: absolute;
     bottom: 5px
 }
+
 .ng-cloak, .x-ng-cloak,
 .ng-hide:not(.ng-hide-animate) {
     display: none !important;
 }
-.err{background-color: #FF3300}
-.err h2{color: white}
-.succ{background-color: #339933 !important}
-.succ h2{color: white}
+
+.err {
+    background-color: #FF3300
+}
+
+.err h2 {
+    color: white
+}
+
+.succ {
+    background-color: #339933 !important
+}
+
+.succ h2 {
+    color: white
+}
+
+.succ-border {
+    border: 3px solid #339933
+}
+
+.arrow-middle {
+    margin-left: 47%
+}

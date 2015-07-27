@@ -16,9 +16,13 @@
                 Production Tracker - <span ng-show="station">{{station}} Station</span><span ng-show="station==''">No station set</span>
             </h1>
             <span flex></span>
+            <md-button class="mg-fab" aria-label="Scan" ng-click="changestate('scan')">
+                <ng-md-icon style="fill: white" icon="videocam"></ng-md-icon>
+            </md-button>
             <md-button class="mg-fab" aria-label="Open Settings" ng-click="changestate('settings')">
                 <ng-md-icon style="fill: white" icon="settings_applications"></ng-md-icon>
             </md-button>
+
         </div>
 
     </md-toolbar>

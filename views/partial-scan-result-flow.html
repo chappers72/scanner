@@ -1,50 +1,76 @@
 <!--partial-scan-result.html-->
-<div ng-show="stageStatus==='error'" layout="row" layout-margin layout-fill layout-padding  class="err">
+<div ng-show="stageStatus==='error'" layout="row" layout-margin layout-fill layout-padding class="err">
     <div flex="90">
-        <h2>A connection error has occurred. No data can be retreived.</h2>
+        <h2>{{errMsg}}</h2>
     </div>
     <div flex ng-click="reloadApp()">
         <ng-md-icon icon="close"
                     style="fill: white; float: right;cursor: pointer"></ng-md-icon>
     </div>
 </div>
-<button ng-click="reloadApp()">Go</button>
 
-<div id="mainbody" ng-show="stageStatus!=='error'">
-    <table md-colresize="md-colresize" class="md-table">
-        <thead>
-        <tr class="md-table-headers-row">
-            <th class="md-table-header">
-                Field
-            </th>
-            <th class="md-table-header">
-                Value
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="md-table-content-row">
-            <td class="md-table-content grey">Order Reference</td>
-            <td class="md-table-content">{{item.orderid}}</td>
-        </tr>
-        <tr class="md-table-content-row">
-            <td class="md-table-content grey">Order Type</td>
-            <td class="md-table-content">{{item.ordertype}}</td>
-        </tr>
-        <tr class="md-table-content-row">
-            <td class="md-table-content grey">Source</td>
-            <td class="md-table-content">{{item.source}}</td>
-        </tr>
-        <tr class="md-table-content-row">
-            <td class="md-table-content grey">Orthotist</td>
-            <td class="md-table-content">{{item.orthotist}}</td>
-        </tr>
-        <tr class="md-table-content-row">
-            <td class="md-table-content grey">Customer</td>
-            <td class="md-table-content">{{item.customer}}</td>
-        </tr>
-        </tbody>
-    </table>
+
+<div layout="row" layout-wrap layout-padding id="mainbody" ng-show="stageStatus!=='error'">
+    <div flex="50">
+        <md-whiteframe class="md-whiteframe-z2" layout layout-align="center center">
+            <table class="results-table">
+                <tbody>
+                <tr>
+                    <td>Order Reference</td>
+                    <td>{{item.orderid}}</td>
+                </tr>
+                <tr class="md-table-content-row">
+                    <td>Order Type</td>
+                    <td>{{item.ordertype}}</td>
+                </tr>
+                <tr class="md-table-content-row">
+                    <td>Source</td>
+                    <td>{{item.source}}</td>
+                </tr>
+                <tr class="md-table-content-row">
+                    <td>Orthotist</td>
+                    <td>{{item.orthotist}}</td>
+                </tr>
+                <tr class="md-table-content-row">
+                    <td>Customer</td>
+                    <td>{{item.customer}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-whiteframe>
+    </div>
+    <div flex="50">
+        <div ng-repeat="stages in item.stageInformation">
+        <md-whiteframe class="md-whiteframe-z2" ng-class="(stages.in!=='') ? 'succ-border' : ''" layout>
+            <div layout="row" layout-wrap layout-padding style="width: 100%">
+                <div flex="100">
+                    {{stages.stageName}}
+                </div>
+                <div flex="33">
+                    In
+                </div>
+                <div flex="33">
+                    Out
+                </div>
+                <div flex="33">
+                    Count
+                </div>
+                <div flex="33">
+                    {{stages.in}}
+                </div>
+                <div flex="33">
+                    {{stages.out}}
+                </div>
+                <div flex="33">
+                    {{stages.count}}
+                </div>
+            </div>
+    </md-whiteframe>
+        <ng-md-icon ng-show="!$last" icon="keyboard_arrow_down" class="arrow-middle"></ng-md-icon>
+
+        </div>
+</div>
+<div flex="100">
     <div layout="row" layout-margin layout-fill layout-padding>
         <div flex>
             <md-button ng-show="stageStatus==='in'" ng-click="scanIn(item.orderid)"
@@ -95,5 +121,7 @@
                         style="fill: white; float: right;cursor: pointer"></ng-md-icon>
         </div>
     </div>
-
 </div>
+</div>
+
+

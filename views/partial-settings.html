@@ -5,8 +5,8 @@
             <h2>Network connection is not available. Please contact support.</h2>
         </div>
         <div flex>
-            <ng-md-icon ng-click="resetManualMessage()" icon="close"
-                        style="fill: white; float: right;cursor: pointer"></ng-md-icon>
+            <md-button class="md-fab md-mini md-warn md-raised" aria-label="Re-try"><ng-md-icon ng-click="reloadApp()" icon="close"
+                        style="fill: white; cursor: pointer"></ng-md-icon></md-button>
         </div>
     </div>
     <md-content layout-padding style="height: 600px;padding: 24px;" ng-hide="items.networkerror">
@@ -28,8 +28,13 @@
         </md-select>
         <br /><br />
         <br /><br />
-        <md-button class="md-raised full-width" ng-click="saveConfig({'station' : station , 'user':{'name':user.name,'password':user.password}})" style="margin: 25px 0px">
+        <md-button class="md-raised full-width" ng-hide="settingsUpdate" ng-click="saveConfig({'station' : station , 'user':{'name':user.name,'password':user.password}})" style="margin: 25px 0px">
             <h3>Save</h3>
         </md-button>
+        <div layout="row" layout-margin layout-padding ng-show="settingsUpdate" class="succ">
+            <div flex="100">
+                <h2>Settings updated. The application will now restart.</h2>
+            </div>
+        </div>
     </md-content>
 </div>

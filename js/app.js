@@ -37,23 +37,26 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('scan-result', {
-            url: '/scan-result',
-            templateUrl: 'views/partial-scan-result.html',
+        .state('scan-result-flow', {
+            url: '/scan-result-flow',
+            templateUrl: 'views/partial-scan-result-flow.html',
             controller: function ($scope, promiseObj, orderid) {
                 // You can be sure that promiseObj is ready to use!
+                //set default msg
+                $scope.errMsg = 'A connection error has occurred. No data can be retreived.';
                 $scope.item = promiseObj.data.order;
                 $scope.stageStatus = orderid.setStatus(promiseObj.data.order, $scope.station);
+                $scope.errMsg = promiseObj.data.msg;
             },
             resolve: {
                 promiseObj: function (orderid, orderconfig) {
                     // $http returns a promise for the url data
                     //production
                     return orderconfig.checkOrder(orderid.getOrderId()).then(function (_data) {
-                        console.log(_data);
                         return _data;
                     }, function (err) {
-                        return {'data':{'order': ''}}
+                        console.log('err',err);
+                        return {'data':{'order': '','msg':err.statusText}}
                     });
 
 

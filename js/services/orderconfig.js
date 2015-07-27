@@ -12,8 +12,12 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
                 'orderid': orderid,
                 'command': 'check'
             },
+<<<<<<< HEAD
+=======
+            timeout: 5000,
+>>>>>>> 918c9b7ec60990abcee8d686e7e265fe5f43f180
             url: GENERAL_CONFIG.API_URL
-        });
+        })
     };
 
     this.orderIn = function (orderid, stage) {
@@ -60,6 +64,10 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
             },
             url: GENERAL_CONFIG.API_URL
         });
+    }
+    this.resetConnectionError = function(){
+        console.log('reset')
+        $scope.connectionError = false;
     }
 
 }])

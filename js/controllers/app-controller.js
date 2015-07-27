@@ -3,6 +3,7 @@
  */
 var app = angular.module('scanner');
 
+<<<<<<< HEAD
 app.controller('scan',
     [
         '$scope',
@@ -31,6 +32,25 @@ app.controller('scan',
                 $scope.changestate('settings');
             } else {
                 $scope.station = data.station;
+=======
+app.controller('scan', ['$scope', '$mdSidenav', 'qrfactory', '$state', 'orderconfig', '$http', 'orderid','$timeout', function ($scope, $mdSidenav, qrfactory, $state, orderconfig, $http, orderid, $timeout) {
+    $scope.$on('$stateChangeSuccess', function (event, toState) {
+        if (toState.name === 'scan-result') {
+            $scope.back = true;
+        }else if (toState.name === 'scan home') {
+            $scope.stageStatus = '';
+        }
+    });
+    $scope.qr = {};
+    $scope.$on('$viewContentLoaded',
+        function (event, viewConfig) {
+            if ($state.current.name == 'scan') {
+                qrfactory.reset();
+                qrfactory.scan().then(function (_data) {
+                    $scope.qr.qrresult = _data;
+                    $state.go('scan-result');
+                });
+>>>>>>> 918c9b7ec60990abcee8d686e7e265fe5f43f180
             }
         });
         chrome.storage.local.get('user', function (data) {
@@ -55,6 +75,7 @@ app.controller('scan',
             $state.go(s);
         };
 
+<<<<<<< HEAD
         $scope.resetScanMessage = function () {
             $scope.scanErr = false;
             $scope.scanSucc = false;
@@ -63,6 +84,14 @@ app.controller('scan',
         $scope.resetManualMessage = function () {
             $scope.manualerr = false;
         };
+=======
+    $scope.changestate = function (s) {
+        $state.go(s);
+        $mdSidenav('left').close();
+    };
+
+
+>>>>>>> 918c9b7ec60990abcee8d686e7e265fe5f43f180
 
 
         //Start of setting and getting order info
@@ -77,6 +106,7 @@ app.controller('scan',
             $state.go('scan-result');
         };
 
+<<<<<<< HEAD
         //Scans in     
         $scope.scanIn = function (a) {
             orderconfig.orderIn(a, $scope.station)
@@ -102,6 +132,13 @@ app.controller('scan',
                     $scope.scanSucc = false;
                     $scope.scanresult = err.statusText;
                 });
+=======
+    $scope.lookupOrder = function (a) {
+        $scope.manualerr = false;
+        if (a === '') {
+            $scope.manualerr = true;
+            return;
+>>>>>>> 918c9b7ec60990abcee8d686e7e265fe5f43f180
         }
 
         //Config code
@@ -116,5 +153,16 @@ app.controller('scan',
             chrome.storage.local.set({'user': val.user});
             $scope.changestate('scan home');
         }
+<<<<<<< HEAD
         //End config code
     }]);
+=======
+        // Save it using the Chrome extension storage API.
+        chrome.storage.local.set({'station': val.station});
+        chrome.storage.local.set({'user': val.user});
+        $scope.changestate('scan home');
+    }
+    //End config code
+
+}]);
+>>>>>>> 918c9b7ec60990abcee8d686e7e265fe5f43f180

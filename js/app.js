@@ -43,13 +43,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: function ($scope, promiseObj, orderid) {
                 // You can be sure that promiseObj is ready to use!
                 $scope.item = promiseObj.data.order;
-                $scope.stageStatus = orderid.setStatus(promiseObj.data.order.stageInformation, $scope.station);
+                $scope.stageStatus = orderid.setStatus(promiseObj.data.order, $scope.station);
             },
             resolve: {
                 promiseObj: function (orderid, orderconfig) {
                     // $http returns a promise for the url data
                     //production
-                    return orderconfig.checkOrder(orderid.getOrderId());
+                    return orderconfig.checkOrder(orderid.getOrderId()).then(function (_data) {
+                        console.log(_data);
+                        return _data;
+                    }, function (err) {
+                        return {'data':{'order': ''}}
+                    });
+
 
                 }
             }
@@ -62,7 +68,6 @@ angular.module('http-post-fix', [], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.defaults.headers.common.Authorization = 'Basic ' + window.btoa("Test User:password");
-
     // Override $http service's default transformRequest
     $httpProvider.defaults.transformRequest = [function (data) {
         /**

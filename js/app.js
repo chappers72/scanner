@@ -70,6 +70,7 @@ app.config(function ($stateProvider, $urlRouterProvider,$mdThemingProvider) {
             controller: function ($scope, promiseObj, orderid) {
                 // You can be sure that promiseObj is ready to use!
                 //set default msg
+
                 $scope.errMsg = 'A connection error has occurred. No data can be retreived.';
                 $scope.item = orderid.setStageGraduation(promiseObj.data.order);
                 $scope.stageStatus = orderid.setStatus(promiseObj.data.order, $scope.station);

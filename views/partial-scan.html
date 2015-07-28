@@ -1,7 +1,12 @@
 <!--partial-scan.tpml-->
-<div id="mainbody">
+<div id="mainbody" layout="column" layout-fill layout-align="center center">
     <div id="outdiv"></div>
+    <md-button class="md-raised md-warn" ng-click="changestate('scan home')" style="margin-top:20px;width: 300px !important">
+        <h3 >Cancel</h3>
+    </md-button>
     <!--Required to store the image from the scan-->
     <canvas style="visibility: hidden;" id="qr-canvas" width="400"
             height="400"></canvas>
+
+
 </div>

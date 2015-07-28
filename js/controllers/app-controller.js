@@ -13,7 +13,7 @@ app.controller('scan',
         'orderid',
         '$timeout',
         function ($scope,  qrfactory, $state, orderconfig, $http, orderid, $timeout) {
-
+            $scope.qr={}
             $scope.$on('$viewContentLoaded',
                 function (event, viewConfig) {
                     if ($state.current.name == 'scan') {
@@ -61,6 +61,7 @@ app.controller('scan',
             $scope.resetScanMessage = function () {
                 $scope.scanErr = false;
                 $scope.scanSucc = false;
+                $scope.changestate('scan home')
             };
 
             $scope.resetManualMessage = function () {

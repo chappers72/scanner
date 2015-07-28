@@ -9,14 +9,20 @@
 <div ng-controller="scan" layout="column" class="full-height">
     <md-toolbar layout="row">
         <div class="md-toolbar-tools">
-            <h1>
-                Production Tracker - <span ng-show="station">{{station}} Station</span><span ng-show="station==''">No station set</span>
-            </h1>
-            <span flex></span>
-            <md-button class="md-raised md-padd-left" ng-click="changestate('scan')"> Scan <ng-md-icon class="button-icon-padding" icon="videocam"></ng-md-icon></md-button>
-            <md-button class="md-raised md-padd-left" ng-click="changestate('manual')"> Manual <ng-md-icon class="button-icon-padding" icon="input"></ng-md-icon></md-button>
-            <md-button class="md-raised md-padd-left" ng-click="changestate('settings')"> Settings <ng-md-icon class="button-icon-padding" icon="settings_applications"></ng-md-icon></md-button>
-        </div>
+            <div flex="33">
+                <h3>
+                    Production Tracker
+                </h3>
+            </div>
+            <div flex="33" style="text-align: center">
+                <div style="text-transform: capitalize;padding:3px;color:white;font-weight:bold;font-size:1.6em" ng-show="station">{{station}} Station</div><span ng-show="station==''">No station set</span>
+            </div>
+            <div flex="33" style="text-align: right">
+                <md-button class="md-raised md-padd-left" ng-click="changestate('scan')"> Scan <ng-md-icon class="button-icon-padding" icon="videocam"></ng-md-icon></md-button>
+                <md-button class="md-raised md-padd-left" ng-click="changestate('manual')"> Manual <ng-md-icon class="button-icon-padding" icon="input"></ng-md-icon></md-button>
+                <md-button class="md-raised md-padd-left" ng-click="changestate('settings')"> Settings <ng-md-icon class="button-icon-padding" icon="settings_applications"></ng-md-icon></md-button>
+            </div>
+           </div>
     </md-toolbar>
     <div layout="row" flex class="content-wrapper">
         <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left">

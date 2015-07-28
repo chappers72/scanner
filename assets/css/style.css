@@ -37,7 +37,7 @@
 }
 
 .succ {
-    background-color: #428bca !important
+    background-color: limegreen !important
 }
 
 .succ h2 {
@@ -71,3 +71,12 @@ body{
     font-size:1.1em;
 }
 .md-padd-left{margin-left: 5px}
+
+input{
+    font-weight:bold;
+    color:black !important;
+    font-size:1.9em;
+}
+td{
+    border:1px solid silver;
+}

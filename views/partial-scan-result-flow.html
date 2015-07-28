@@ -1,12 +1,9 @@
 <!--partial-scan-result.html-->
 <div ng-show="stageStatus==='error'" layout="row" layout-margin layout-fill layout-padding class="err">
     <div flex="90">
-        <h2>{{errMsg}}</h2>
+        <h2>{{errMsg}}  <md-button ng-click="reloadApp()" class="md-raised md-warn">OK</md-button></h2>
     </div>
-    <div flex ng-click="reloadApp()">
-        <ng-md-icon icon="close"
-                    style="fill: white; float: right;cursor: pointer"></ng-md-icon>
-    </div>
+
 </div>
 
 
@@ -41,87 +38,86 @@
     </div>
     <div flex="50">
         <div ng-repeat="stages in item.stageInformation">
-        <md-whiteframe class="md-whiteframe-z2" ng-class="(stages.in!=='') ? 'succ-border' : ''" layout>
-            <div layout="row" layout-wrap layout-padding style="width: 100%">
-                <div flex="100">
-                    {{stages.stageName}}
+            <md-whiteframe class="md-whiteframe-z2"
+                           ng-class="(stages.currentStage===true) ? 'curr-bordered' :(stages.in!=='') ? 'succ-bordered' : ''"
+                           layout ng-style="{opacity : ((stages.opac != '') && stages.opac) || '0.4'}">
+                <div layout="row" layout-wrap layout-padding style="width: 100%">
+                    <div flex="100">
+                        {{stages.stageName}}
+                    </div>
+                    <div flex="33">
+                        In
+                    </div>
+                    <div flex="33">
+                        Out
+                    </div>
+                    <div flex="33">
+                        Count
+                    </div>
+                    <div flex="33">
+                        {{stages.in}}
+                    </div>
+                    <div flex="33">
+                        {{stages.out}}
+                    </div>
+                    <div flex="33">
+                        {{stages.count}}
+                    </div>
                 </div>
-                <div flex="33">
-                    In
-                </div>
-                <div flex="33">
-                    Out
-                </div>
-                <div flex="33">
-                    Count
-                </div>
-                <div flex="33">
-                    {{stages.in}}
-                </div>
-                <div flex="33">
-                    {{stages.out}}
-                </div>
-                <div flex="33">
-                    {{stages.count}}
-                </div>
+            </md-whiteframe>
+            <ng-md-icon ng-show="!$last" icon="keyboard_arrow_down" class="arrow-middle"></ng-md-icon>
+
+        </div>
+    </div>
+    <div flex="100">
+        <div layout="row" layout-margin layout-fill layout-padding>
+            <div flex>
+                <md-button ng-show="stageStatus==='in'" ng-click="scanIn(item.orderid)"
+                           class="md-raised md-primary full-width succ"><h3>
+                    Confirm Order In</h3>
+                    <ng-md-icon icon="done" class="fill-white"></ng-md-icon>
+                </md-button>
+                <md-button ng-show="stageStatus==='out'" ng-click="scanOut(item.orderid)"
+                           class="md-raised md-primary full-width succ"><h3>
+                    Confirm Order Out</h3>
+                    <ng-md-icon icon="launch" class="fill-white"></ng-md-icon>
+                </md-button>
             </div>
-    </md-whiteframe>
-        <ng-md-icon ng-show="!$last" icon="keyboard_arrow_down" class="arrow-middle"></ng-md-icon>
+            <div flex>
+                <md-button ng-show="stageStatus!=='none'" ng-click="changestate('scan home')"
+                           class="md-raised md-warn full-width"><h3>Wrong Order - Re
+                    Scan</h3>
+                    <ng-md-icon icon="warning" class="fill-white" size="24px"></ng-md-icon>
+                </md-button>
+            </div>
+        </div>
+
+        <div layout="row" layout-margin layout-fill layout-padding ng-show="stageStatus=='none'" class="err">
+            <div flex="90">
+                <h2>Your scan is not for this stage.
+                    <md-button ng-click="changestate('scan home')" class="md-raised md-warn">OK</md-button>
+                </h2>
+            </div>
 
         </div>
-</div>
-<div flex="100">
-    <div layout="row" layout-margin layout-fill layout-padding>
-        <div flex>
-            <md-button ng-show="stageStatus==='in'" ng-click="scanIn(item.orderid)"
-                       class="md-raised md-primary full-width succ"><h3>
-                Confirm Order In</h3>
-                <ng-md-icon icon="done" style="fill: white"></ng-md-icon>
-            </md-button>
-            <md-button ng-show="stageStatus==='out'" ng-click="scanOut(item.orderid)"
-                       class="md-raised md-primary full-width succ"><h3>
-                Confirm Order Out</h3>
-                <ng-md-icon icon="launch" style="fill: white"></ng-md-icon>
-            </md-button>
-        </div>
-        <div flex>
-            <md-button ng-show="stageStatus!=='none'" ng-click="changestate('scan home')"
-                       class="md-raised md-warn full-width"><h3>Wrong Order - Re
-                Scan</h3>
-                <ng-md-icon icon="warning" style="fill: white" size="24px"></ng-md-icon>
-            </md-button>
-        </div>
-    </div>
+        <div layout="row" layout-margin layout-fill layout-padding ng-show="scanErr" class="err">
+            <div flex="90">
+                <h2>{{scanresult}}
+                    <md-button ng-click="resetScanMessage()" class="md-raised md-warn">OK</md-button>
+                </h2>
+            </div>
 
-    <div layout="row" layout-margin layout-fill layout-padding ng-show="stageStatus=='none'" class="err">
-        <div flex="90">
-            <h2>Your scan is not for this stage.</h2>
         </div>
-        <div flex>
-            <ng-md-icon ng-click="changestate('scan home')" icon="close"
-                        style="fill: white; float: right;cursor: pointer"></ng-md-icon>
-        </div>
-    </div>
-    <div layout="row" layout-margin layout-fill layout-padding ng-show="scanErr" class="err">
-        <div flex="90">
-            <h2>{{scanresult}}</h2>
-        </div>
-        <div flex>
-            <ng-md-icon ng-click="resetScanMessage()" icon="close"
-                        style="fill: white; float: right;cursor: pointer"></ng-md-icon>
-        </div>
-    </div>
 
-    <div ng-show="scanSucc" layout-margin layout-fill layout-padding class="succ" layout="row">
-        <div flex="90">
-            <h2>{{scanresult}}</h2>
-        </div>
-        <div flex>
-            <ng-md-icon ng-click="resetScanMessage()" icon="close"
-                        style="fill: white; float: right;cursor: pointer"></ng-md-icon>
+        <div ng-show="scanSucc" layout-margin layout-fill layout-padding class="succ" layout="row">
+            <div flex="90">
+                <h2>{{scanresult}}
+                    <md-button ng-click="resetScanMessage()" class="md-raised md-warn">OK</md-button>
+                </h2>
+            </div>
+
         </div>
     </div>
-</div>
 </div>
 
 

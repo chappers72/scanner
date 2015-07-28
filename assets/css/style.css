@@ -29,7 +29,7 @@
 }
 
 .err {
-    background-color: #FF3300
+    background-color: #c00000
 }
 
 .err h2 {
@@ -37,17 +37,37 @@
 }
 
 .succ {
-    background-color: #339933 !important
+    background-color: #428bca !important
 }
 
 .succ h2 {
     color: white
 }
 
-.succ-border {
-    border: 3px solid #339933
+.succ-bordered {
+    border: 3px solid #378437;
+    background-color: #96CE85 !important;
+}
+.curr-bordered {
+    border: 3px solid #F3992C;
+    background-color: #E48A18;
+    color: white;
 }
 
 .arrow-middle {
     margin-left: 47%
 }
+
+.fill-white {
+    fill: white
+}
+
+.button-icon-padding {
+    position: relative;
+    bottom: -6px;
+    padding-left: 5px;
+}
+body{
+    font-size:1.1em;
+}
+.md-padd-left{margin-left: 5px}

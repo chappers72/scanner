@@ -6,14 +6,13 @@ var app = angular.module('scanner');
 app.controller('scan',
     [
         '$scope',
-        '$mdSidenav',
         'qrfactory',
         '$state',
         'orderconfig',
         '$http',
         'orderid',
         '$timeout',
-        function ($scope, $mdSidenav, qrfactory, $state, orderconfig, $http, orderid, $timeout) {
+        function ($scope,  qrfactory, $state, orderconfig, $http, orderid, $timeout) {
 
             $scope.$on('$viewContentLoaded',
                 function (event, viewConfig) {
@@ -42,11 +41,8 @@ app.controller('scan',
             $scope.version = chrome.runtime.getManifest().version;
 
 
-            $scope.toggleSidenav = toggleSidenav;
             $scope.menuItems = [{title: 'scan'}, {title: 'manual'}, {title: 'settings'}]
-            function toggleSidenav(name) {
-                $mdSidenav(name).toggle();
-            }
+
 
             $scope.doScan = function () {
                 qrfactory.scan().then(function (_data) {
@@ -60,8 +56,6 @@ app.controller('scan',
 
             $scope.changestate = function (s) {
                 $state.go(s);
-                $mdSidenav('left').close();
-
             };
 
             $scope.resetScanMessage = function () {

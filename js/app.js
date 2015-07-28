@@ -3,7 +3,34 @@
  */
 var app = angular.module('scanner', ['ngMaterial', 'ngMdIcons', 'ui.router', 'http-post-fix', 'scanner.config']);
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+app.config(function ($stateProvider, $urlRouterProvider,$mdThemingProvider) {
+    $mdThemingProvider.definePalette('trulifePalette', {
+        '50': 'ffebee',
+        '100': 'ffcdd2',
+        '200': 'ef9a9a',
+        '300': 'e57373',
+        '400': 'ef5350',
+        '500': '009999',
+        '600': 'e53935',
+        '700': 'd32f2f',
+        '800': 'c62828',
+        '900': 'b71c1c',
+        'A100': 'ff8a80',
+        'A200': 'ff5252',
+        'A400': 'ff1744',
+        'A700': 'd50000',
+        'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                            // on this palette should be dark or light
+        'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+            '200', '300', '400', 'A100'],
+        'contrastLightColors': undefined    // could also specify this if default was 'dark'
+    });
+    $mdThemingProvider.theme('default')
+        .primaryPalette('trulifePalette')
+
+
+
+
     $urlRouterProvider.otherwise('/scan-home');
     $stateProvider
         .state('scan home', {
@@ -44,7 +71,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 // You can be sure that promiseObj is ready to use!
                 //set default msg
                 $scope.errMsg = 'A connection error has occurred. No data can be retreived.';
-                $scope.item = promiseObj.data.order;
+                $scope.item = orderid.setStageGraduation(promiseObj.data.order);
                 $scope.stageStatus = orderid.setStatus(promiseObj.data.order, $scope.station);
                 $scope.errMsg = promiseObj.data.msg;
             },
@@ -66,8 +93,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 })
 
 angular.module('http-post-fix', [], function ($httpProvider) {
-    // This code is taken from http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/
-
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.defaults.headers.common.Authorization = 'Basic ' + window.btoa("Test User:password");

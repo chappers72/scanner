@@ -12,8 +12,9 @@ app.controller('scan',
         '$http',
         'orderid',
         '$timeout',
-        function ($scope,  qrfactory, $state, orderconfig, $http, orderid, $timeout) {
-            $scope.qr={}
+        'settingsconfig',
+        function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig) {
+            $scope.qr = {}
             $scope.$on('$viewContentLoaded',
                 function (event, viewConfig) {
                     if ($state.current.name == 'scan') {
@@ -25,24 +26,20 @@ app.controller('scan',
                     }
                 });
 
-            chrome.storage.local.get('station', function (data) {
-                if (!data.station) {
-                    $scope.changestate('settings');
-                } else {
-                    $scope.station = data.station;
-                }
-                ;
-            });
 
-            chrome.storage.local.get('user', function (data) {
-                $scope.user = data.user;
-            });
-
-            $scope.version = chrome.runtime.getManifest().version;
-
-
+            $scope.version = settingsconfig.getVersion();
             $scope.menuItems = [{title: 'scan'}, {title: 'manual'}, {title: 'settings'}]
 
+            settingsconfig.get('settings').then(function (_data) {
+                $scope.settings = _data;
+                if ($scope.settings.user.name == '' || $scope.settings.user.password == '' || $scope.settings.station == '' || $scope.settings.server == '') {
+                    $scope.changestate('settings');
+                }
+            }).then(function () {
+                orderconfig.getStages().then(function(_data){
+                    settingsconfig.stateconfigdata(_data.data,$scope.settings.station)
+                });
+            });
 
             $scope.doScan = function () {
                 qrfactory.scan().then(function (_data) {
@@ -78,12 +75,12 @@ app.controller('scan',
                     return;
                 }
                 orderid.setOrderId(a);
-                $state.go('scan-result-flow');
+                $scope.changestate('scan-result-flow');
             };
 
             //Scans in
             $scope.scanIn = function (a) {
-                orderconfig.orderIn(a, $scope.station)
+                orderconfig.orderIn(a, $scope.settings.station)
                     .then(function (_data) {
                         $scope.scanErr = false;
                         $scope.scanSucc = true;
@@ -96,7 +93,7 @@ app.controller('scan',
             };
 
             $scope.scanOut = function (a) {
-                orderconfig.orderOut(a, $scope.station)
+                orderconfig.orderOut(a, $scope.settings.station)
                     .then(function (_data) {
                         $scope.scanErr = false;
                         $scope.scanSucc = true;
@@ -117,12 +114,10 @@ app.controller('scan',
                 }
                 $scope.settingsUpdate = true;
                 // Save it using the Chrome extension storage API.
-                chrome.storage.local.set({'station': val.station});
-                chrome.storage.local.set({'user': val.user});
+                chrome.storage.local.set({'settings': val});
                 $timeout(function () {
                     chrome.runtime.reload();
                 }, 2000);
-
             }
             //End config code
 

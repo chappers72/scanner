@@ -1,36 +1,55 @@
 <!--partial-config.tpml-->
 <div id="mainbody">
     <div layout="row" layout-margin layout-fill layout-padding ng-show="items.networkerror" class="err">
-        <div flex="90">
-            <h2>Network connection is not available. Please contact support.</h2>
-        </div>
-        <div flex>
-            <md-button class="md-fab md-mini md-warn md-raised" aria-label="Re-try"><ng-md-icon ng-click="reloadApp()" icon="close"
-                        style="fill: white; cursor: pointer"></ng-md-icon></md-button>
+        <div>
+            <h2>Network connection is not available. Please contact support or amend the server address below.</h2>
         </div>
     </div>
-    <md-content layout-padding style="height: 600px;padding: 24px;" ng-hide="items.networkerror">
+    <md-content layout-padding ng-hide="items.networkerror">
         <h1>Configuration Settings</h1>
         <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire mediocrem at, in lobortis conclusionemque
             nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro
             labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans
             no. Sed laudem aliquam ne.</p>
-        <md-input-container>
-            <label>Username</label>
-            <input type="text" ng-model="user.name">
-        </md-input-container>
-        <md-input-container>
-            <label>Password</label>
-            <textarea ng-model="user.password"></textarea>
-        </md-input-container>
-        <md-select class="lgText" ng-model="station">
-            <md-option ng-repeat="item in items| filter:'!QA Reject'" value="{{item.stage}}">{{item.stage}}</md-option>
-        </md-select>
-        <br /><br />
-        <br /><br />
-        <md-button class="md-raised full-width" ng-hide="settingsUpdate" ng-click="saveConfig({'station' : station , 'user':{'name':user.name,'password':user.password}})" style="margin: 25px 0px">
+        </md-content>
+    <md-content layout-padding>
+            <h2 class="md-title">User Settings</h2>
+            <p>
+                <md-input-container>
+                    <label>Username</label>
+                    <input type="text" class="inputLight" ng-model="settings.user.name">
+                </md-input-container>
+                <md-input-container>
+                    <label>Password</label>
+                    <input type="text" class="inputLight" ng-model="settings.user.password">
+                </md-input-container>
+            </p>
+        </section>
+        <section ng-hide="items.networkerror">
+            <h2 class="md-title">Station</h2>
+                   <md-select class="lgText noTopMargin" ng-model="settings.station">
+                <md-option ng-repeat="item in items| filter:'!QA Reject'" value="{{item.stage}}">{{item.stage}}
+                </md-option>
+            </md-select>
+        </section>
+        <br />
+        <br />
+        </md-content>
+
+        <section>
+            <h2 class="md-title">Server Details</h2>
+            <md-input-container>
+                <label>Server Address</label>
+                <input type="text" class="inputLight" ng-model="settings.server">
+            </md-input-container>
+        </section>
+<div layout="column" layout-align="center center">
+        <md-button class="md-raised middleButton" ng-hide="settingsUpdate"
+                   ng-click="saveConfig({'station' : settings.station ,'server' : settings.server , 'user':{'name':settings.user.name,'password':settings.user.password}})"
+                   style="margin: 25px 0px">
             <h3>Save</h3>
         </md-button>
+</div>
         <div layout="row" layout-margin layout-padding ng-show="settingsUpdate" class="succ">
             <div flex="100">
                 <h2>Settings updated. The application will now restart.</h2>

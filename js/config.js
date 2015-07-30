@@ -8,7 +8,7 @@
 var config_module = angular.module('scanner.config', []);
 var config_data = {
     'GENERAL_CONFIG': {
-        'API_URL': 'http://31.49.241.45/org/orderconfig.nsf/data.xsp' //Node Server for API
+        'API_URL': '/org/orderconfig.nsf/data.xsp' //Node Server for API
     }
 }
 angular.forEach(config_data,function(key,value) {

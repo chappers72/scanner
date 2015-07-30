@@ -37,7 +37,7 @@
 }
 
 .succ {
-    background-color: limegreen !important
+    background-color: #378437 !important
 }
 
 .succ h2 {
@@ -48,6 +48,7 @@
     border: 3px solid #378437;
     background-color: #96CE85 !important;
 }
+
 .curr-bordered {
     border: 3px solid #F3992C;
     background-color: #E48A18;
@@ -67,16 +68,33 @@
     bottom: -6px;
     padding-left: 5px;
 }
-body{
-    font-size:1.1em;
-}
-.md-padd-left{margin-left: 5px}
 
-input{
-    font-weight:bold;
-    color:black !important;
-    font-size:1.9em;
+body {
+    font-size: 1.1em;
 }
-td{
-    border:1px solid silver;
+
+.md-padd-left {
+    margin-left: 5px
+}
+
+input {
+    font-weight: bold;
+    color: black !important;
+    font-size: 1.9em;
+}
+
+td {
+    border: 1px solid silver;
+}
+
+.noTopMargin {
+    margin-top: 0px
+}
+
+.inputLight {
+    font-weight: normal;
+    font-size: 1.3em
+}
+.middleButton{margin-top: 150px;
+    width: 300px !important;
 }

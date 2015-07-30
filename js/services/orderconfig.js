@@ -2,7 +2,7 @@
  * Created by Mark on 26/05/2015.
  */
 var app = angular.module('scanner');
-app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_CONFIG) {
+app.service('orderconfig', ['$http', 'GENERAL_CONFIG','settingsconfig', function ($http, GENERAL_CONFIG,settingsconfig) {
 
     //CHECK ORDER
     this.checkOrder = function (orderid) {
@@ -12,7 +12,8 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
                 'orderid': orderid,
                 'command': 'check'
             },
-            url: GENERAL_CONFIG.API_URL
+            timeout: 3000,
+            url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
         })
     };
 
@@ -22,9 +23,9 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
             data: {
                 'orderid': orderid,
                 'command': 'in',
-                'stage': stage.toLowerCase()
+                'stage': stage.toLowerCase().replace(/ /g,'')
             },
-            url: GENERAL_CONFIG.API_URL
+           url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
         })
     };
 
@@ -34,9 +35,9 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
             data: {
                 'orderid': orderid,
                 'command': 'out',
-                'stage': stage.toLowerCase()
+                'stage': stage.toLowerCase().replace(/ /g,'')
             },
-            url: GENERAL_CONFIG.API_URL
+            url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
         });
     };
 
@@ -46,9 +47,9 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
             data: {
                 'orderid': orderid,
                 'command': 'outreject',
-                'stage': stage.toLowerCase()
+                'stage': stage.toLowerCase().replace(/ /g,'')
             },
-            url: GENERAL_CONFIG.API_URL
+            url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
         });
     };
 
@@ -59,7 +60,7 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', function ($http, GENERAL_
                 'command': 'getstages'
             },
             timeout: 3000,
-            url: GENERAL_CONFIG.API_URL
+            url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
         });
     }
     this.resetConnectionError = function(){

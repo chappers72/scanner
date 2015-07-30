@@ -4,6 +4,8 @@
 var app = angular.module('scanner');
 app.service('orderid', ['settingsconfig', function (settingsconfig) {
 
+    //The Order Object
+    var orderData={};
     //Set ORDERID
     this.setOrderId = function (orderid) {
         this.orderid = orderid;

@@ -98,6 +98,21 @@ app.controller('scan',
                     });
             };
 
+            //Hide / show action button - checks Order Data which holds which buttons to display sent from server
+            $scope.hasButton=function(key){
+                if(orderid.orderObject.buttons){
+
+                    for(var i=0;i<orderid.orderObject.buttons.length;i++){
+                        if(orderid.orderObject.buttons[i]===key) {
+                            console.log('Have button ' + key);
+                            return true;
+                        }
+                    }
+
+                }
+                return false;
+            }
+
             //QA Reject
             $scope.scanQAReject = function (a) {
                 orderconfig.scanQAReject(a, $scope.settings.station)

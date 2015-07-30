@@ -70,6 +70,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
                 //set default msg
                 $scope.errMsg = 'A connection error has occurred. No data can be retrieved.';
                 $scope.item = orderid.setStageGraduation(promiseObj.data.order);
+                orderid.orderObject=promiseObj.data.order;
                 $scope.stageStatus = orderid.setStatus(promiseObj.data.order, $scope.settings.station, $scope.inout);
                 $scope.inoutButtons = orderid.configDataCheck(promiseObj.data.order.currentStage);
                 $scope.qaRejectButton = orderid.configQARejectCheck();

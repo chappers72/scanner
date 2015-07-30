@@ -66,13 +66,17 @@
     <div flex="100">
         <div layout="row" layout-margin layout-fill layout-padding ng-hide="scanSucc">
             <div flex>
-                <md-button ng-show="stageStatus==='in' || inoutButtons==='in'" ng-click="scanIn(item.orderid)"
-                           class="md-raised md-primary full-width succ"><h3>
-                    Confirm Order In <ng-md-icon icon="done" class="fill-white button-icon-padding" size="24px"></ng-md-icon>
-                </h3>
+               <!-- <md-button ng-show="stageStatus==='in' || inoutButtons==='in'" ng-click="scanIn(item.orderid)"
+                           class="md-raised md-primary full-width succ">-->
+                <md-button ng-show="hasButton('in')" ng-click="scanIn(item.orderid)"
+                           class="md-raised md-primary full-width succ">
+                    <h3>Confirm Order In <ng-md-icon icon="done" class="fill-white button-icon-padding" size="24px"></ng-md-icon></h3>
                 </md-button>
-                <md-button ng-show="stageStatus==='out'" ng-click="scanOut(item.orderid)"
-                           class="md-raised md-primary full-width succ"><h3>Confirm Order Out</h3>
+              <!--  <md-button ng-show="stageStatus==='out'" ng-click="scanOut(item.orderid)"
+                           class="md-raised md-primary full-width succ">-->
+                    <md-button ng-show="hasButton('out')" ng-click="scanOut(item.orderid)"
+                           class="md-raised md-primary full-width succ">
+                    <h3>Confirm Order Out</h3>
                     <ng-md-icon icon="launch" class="fill-white"></ng-md-icon>
                 </md-button>
             </div>
@@ -82,7 +86,7 @@
                     <h3>Cancel</h3>
                 </md-button>
             </div>
-            <div flex ng-show="qaRejectButton==='true'">
+            <div flex ng-show="hasButton('outreject')">
                 <md-button ng-click="scanQAReject(item.orderid)"
                            class="md-raised md-warn full-width">
                     <h3>QA Reject</h3>

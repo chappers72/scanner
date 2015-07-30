@@ -10,7 +10,8 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', functio
             method: 'POST',
             data: {
                 'orderid': orderid,
-                'command': 'check'
+                'command': 'check',
+                'stage':settingsconfig.station.toLowerCase().replace(/ /g, '')
             },
             timeout: 3000,
             url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL

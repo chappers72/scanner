@@ -14,10 +14,10 @@
                     Production Tracker
                 </h3>
             </div>
-            <div flex="33" style="text-align: center">
-                <div style="text-transform: capitalize;padding:3px;color:white;font-weight:bold;font-size:1.6em" ng-show="station">{{station}} Station</div><span ng-show="station==''">No station set</span>
+            <div flex="33" class="text-centre">
+                <div class="station-header" ng-show="settings.station">{{settings.station}} Station</div><span ng-show="settings.station==''">No station set</span>
             </div>
-            <div flex="33" style="text-align: right">
+            <div flex="33" class="text-right">
                 <md-button class="md-raised md-padd-left" ng-click="changestate('scan')"> Scan <ng-md-icon class="button-icon-padding" icon="videocam"></ng-md-icon></md-button>
                 <md-button class="md-raised md-padd-left" ng-click="changestate('manual')"> Manual <ng-md-icon class="button-icon-padding" icon="input"></ng-md-icon></md-button>
                 <md-button class="md-raised md-padd-left" ng-click="changestate('settings')"> Settings <ng-md-icon class="button-icon-padding" icon="settings_applications"></ng-md-icon></md-button>
@@ -82,5 +82,4 @@
 <script src="/js/services/orderconfig.js"></script>
 <script src="/js/services/orderid.js"></script>
 <script src="/js/services/settings.js"></script>
-<!--<script src="/js/services/autocomplete.js"></script>-->
 </html>

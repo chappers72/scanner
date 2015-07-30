@@ -45,12 +45,12 @@
     <div flex="50">
         <md-whiteframe class="md-whiteframe-z2" layout layout-align="center left">
 
-            <table cellpadding="7" cellspacing="0" width="95%">
+            <table class="result-table" cellpadding="7" cellspacing="0" width="95%">
                 <tr>
                     <td width="200">&nbsp;</td>
-                    <td width="100" style="font-size:1.2em;font-weight:bold;text-align: center">In</td>
-                    <td width="100" style="font-size:1.2em;font-weight:bold;text-align: center">Out</td>
-                    <td width="100" style="font-size:1.2em;font-weight:bold;text-align: center">Count</td>
+                    <td width="100">In</td>
+                    <td width="100">Out</td>
+                    <td width="100">Count</td>
                 </tr>
                 <tr ng-repeat="stages in item.stageInformation"
                     ng-class="(stages.currentStage===true) ? 'curr-bordered' :(stages.in!=='') ? 'succ-bordered' : ''"
@@ -89,18 +89,9 @@
                 </md-button>
             </div>
         </div>
-
-        <!--<div layout="row" layout-margin layout-fill layout-padding ng-show="stageStatus=='none' && inoutButtons!=='in'" class="err">-->
-        <!--<div flex="90">-->
-        <!--<h2>Your scan is not for this stage.-->
-        <!--<md-button ng-click="changestate('scan home')" class="md-raised md-warn">OK</md-button>-->
-        <!--</h2>-->
-        <!--</div>-->
-
-        <!--</div>-->
         <div layout="row" layout-margin layout-fill layout-padding ng-show="scanErr" class="err">
             <div flex="90">
-                <h2>
+                <h2>{{scanresult}}
                     <md-button ng-click="resetScanMessage()" class="md-raised md-warn">OK</md-button>
                 </h2>
             </div>
@@ -111,12 +102,12 @@
              layout-align="center center">
             <div flex="90">
                 <h2>{{scanresult}}</h2>
-                <md-button ng-click="resetScanMessage()" class="md-raised"
-                           style="margin-top:150px;width: 300px !important">OK
+                <md-button ng-click="resetScanMessage()" class="md-raised middleButton">OK
                 </md-button>
             </div>
+
         </div>
-    </div>
+     </div>
 </div>
 
 

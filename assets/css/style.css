@@ -95,6 +95,30 @@ td {
     font-weight: normal;
     font-size: 1.3em
 }
-.middleButton{margin-top: 150px;
+
+.middleButton {
+    margin-top: 150px;
     width: 300px !important;
+}
+
+.station-header {
+    text-transform: capitalize;
+    padding: 3px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.6em
+}
+
+.text-center {
+    text-align: center
+}
+
+.text-right {
+    text-align: right
+}
+
+.results-table td {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center
 }

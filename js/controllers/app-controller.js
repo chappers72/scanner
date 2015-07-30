@@ -41,6 +41,9 @@ app.controller('scan',
             }).then(function () {
                 orderconfig.getStages().then(function(_data){
                     settingsconfig.stateconfigdata(_data.data,$scope.settings.station)
+                }, function (err) {
+                    //We cant get to the server to redirect to settings with an error message
+                    $scope.changestate('settings');
                 });
             });
 

@@ -1,5 +1,6 @@
 <!--partial-config.tpml-->
 <div id="mainbody">
+
     <div layout="row" layout-margin layout-fill layout-padding ng-show="items.networkerror" class="err">
         <div>
             <h2>Network connection is not available. Please contact support or amend the server address below.</h2>
@@ -7,27 +8,29 @@
     </div>
     <md-content layout-padding ng-hide="items.networkerror">
         <h1>Configuration Settings</h1>
+        <h3>Version: {{version}}</h3>
         <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire mediocrem at, in lobortis conclusionemque
             nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro
             labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans
             no. Sed laudem aliquam ne.</p>
         </md-content>
+    <form name="form">
     <md-content layout-padding>
             <h2 class="md-title">User Settings</h2>
             <p>
                 <md-input-container>
                     <label>Username</label>
-                    <input type="text" class="inputLight" ng-model="settings.user.name">
+                    <input type="text" class="inputLight" ng-model="settings.user.name" required>
                 </md-input-container>
                 <md-input-container>
                     <label>Password</label>
-                    <input type="text" class="inputLight" ng-model="settings.user.password">
+                    <input type="text" class="inputLight" ng-model="settings.user.password" required>
                 </md-input-container>
             </p>
         </section>
         <section ng-hide="items.networkerror">
             <h2 class="md-title">Station</h2>
-                   <md-select class="lgText noTopMargin" ng-model="settings.station">
+                   <md-select class="lgText noTopMargin" ng-model="settings.station" required>
                 <md-option ng-repeat="item in items| filter:'!QA Reject'" value="{{item.stage}}">{{item.stage}}
                 </md-option>
             </md-select>
@@ -40,11 +43,11 @@
             <h2 class="md-title">Server Details</h2>
             <md-input-container>
                 <label>Server Address</label>
-                <input type="text" class="inputLight" ng-model="settings.server">
+                <input type="text" class="inputLight" ng-model="settings.server" required>
             </md-input-container>
         </section>
 <div layout="column" layout-align="center center">
-        <md-button class="md-raised middleButton" ng-hide="settingsUpdate"
+        <md-button ng-disabled="form.$invalid" class="md-raised middleButton" ng-hide="settingsUpdate"
                    ng-click="saveConfig({'station' : settings.station ,'server' : settings.server , 'user':{'name':settings.user.name,'password':settings.user.password}})"
                    style="margin: 25px 0px">
             <h3>Save</h3>
@@ -55,5 +58,7 @@
                 <h2>Settings updated. The application will now restart.</h2>
             </div>
         </div>
+
     </md-content>
+        </form>
 </div>

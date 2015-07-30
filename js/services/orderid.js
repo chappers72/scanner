@@ -41,7 +41,7 @@ app.service('orderid', ['settingsconfig', function (settingsconfig) {
     };
 
     this.configQARejectCheck = function () {
-        if (settingsconfig.inoutstages.indexOf('qareject') > -1) {
+        if (settingsconfig.commands.indexOf('qareject') > -1) {
             return 'true'
         } else {
             return 'false'

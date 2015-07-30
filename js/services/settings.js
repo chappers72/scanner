@@ -5,6 +5,7 @@ var app = angular.module('scanner');
 app.service('settingsconfig', ['$q', function ($q) {
    var serverendpoint ='31.49.241.45';
     var inoutstages=[];
+    var commands=[];
     return {
         getVersion: function () {
             return chrome.runtime.getManifest().version;
@@ -21,12 +22,11 @@ app.service('settingsconfig', ['$q', function ($q) {
             return deferred.promise;
         },
         stateconfigdata: function(_data,station){
-            console.log('here',_data, station)
             var self = this;
             for(i = 0;i < _data.length;i++){
-                console.log(_data[i]);
                 if(station==_data[i].stage){
                     this.inoutstages=_data[i].inStages;
+                    this.commands=_data[i].commands;
                 }
             }
 

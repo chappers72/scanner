@@ -72,7 +72,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
                 $scope.item = orderid.setStageGraduation(promiseObj.data.order);
                 $scope.stageStatus = orderid.setStatus(promiseObj.data.order, $scope.settings.station, $scope.inout);
                 $scope.inoutButtons = orderid.configDataCheck(promiseObj.data.order.currentStage);
-                $scope.qaRejectButton = orderid.configQARejectCheck(promiseObj.data.order.currentStage);
+                $scope.qaRejectButton = orderid.configQARejectCheck();
                 $scope.errMsg = promiseObj.data.msg;
             },
             resolve: {

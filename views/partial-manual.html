@@ -7,23 +7,14 @@
             nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro
             labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans
             no. Sed laudem aliquam ne.</p>
-
+        <md-input-container>
             <label>Order Reference</label>
-            <md-autocomplete
-                    md-selected-item="selectedItem"
-                    md-search-text="searchText"
-                    md-items="item in querySearch(searchText)"
-                    md-item-text="item"
-                    md-min-length="3"
-                    placeholder="Enter the order reference here">
-                <md-item-template>
-                    <span md-highlight-text="searchText">{{item}}</span>
-                </md-item-template>
-            </md-autocomplete>
+            <input type="text" ng-model="manual.code">
+        </md-input-container>
           <br/><br/>
         <br/><br/>
         <div layout="column" layout-fill layout-align="center center">
-        <md-button class="md-raised middleButton" ng-click="lookupOrder(selectedItem)" style="margin: 25px 0px">
+        <md-button class="md-raised middleButton" ng-click="lookupOrder(manual.code)">
             <h3>Submit</h3>
         </md-button>
             </div>
@@ -32,8 +23,8 @@
                 <h2>You must enter a product reference.</h2>
             </div>
             <div flex>
-                <ng-md-icon ng-click="resetManualMessage()" icon="close"
-                            style="fill: white; float: right;cursor: pointer"></ng-md-icon>
+                <ng-md-icon ng-click="resetManualMessage()" icon="close" class=fill-white"
+                            style="float: right;cursor: pointer"></ng-md-icon>
             </div>
         </div>
     </md-content>

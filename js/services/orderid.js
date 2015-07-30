@@ -40,6 +40,14 @@ app.service('orderid', ['settingsconfig', function (settingsconfig) {
         }
     };
 
+    this.configQARejectCheck = function () {
+        if (settingsconfig.inoutstages.indexOf('qareject') > -1) {
+            return 'true'
+        } else {
+            return 'false'
+        }
+    };
+
     this.setStageGraduation = function (_data) {
         if (_data) {
             var c = 0;

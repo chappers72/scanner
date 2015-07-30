@@ -2,7 +2,7 @@
  * Created by Mark on 26/05/2015.
  */
 var app = angular.module('scanner');
-app.service('orderconfig', ['$http', 'GENERAL_CONFIG','settingsconfig', function ($http, GENERAL_CONFIG,settingsconfig) {
+app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', function ($http, GENERAL_CONFIG, settingsconfig) {
 
     //CHECK ORDER
     this.checkOrder = function (orderid) {
@@ -13,19 +13,19 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG','settingsconfig', function
                 'command': 'check'
             },
             timeout: 3000,
-            url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
+            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         })
     };
 
     this.orderIn = function (orderid, stage) {
-       return $http({
+        return $http({
             method: 'POST',
             data: {
                 'orderid': orderid,
                 'command': 'in',
-                'stage': stage.toLowerCase().replace(/ /g,'')
+                'stage': stage.toLowerCase().replace(/ /g, '')
             },
-           url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
+            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         })
     };
 
@@ -35,9 +35,9 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG','settingsconfig', function
             data: {
                 'orderid': orderid,
                 'command': 'out',
-                'stage': stage.toLowerCase().replace(/ /g,'')
+                'stage': stage.toLowerCase().replace(/ /g, '')
             },
-            url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
+            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         });
     };
 
@@ -47,9 +47,9 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG','settingsconfig', function
             data: {
                 'orderid': orderid,
                 'command': 'outreject',
-                'stage': stage.toLowerCase().replace(/ /g,'')
+                'stage': stage.toLowerCase().replace(/ /g, '')
             },
-            url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
+            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         });
     };
 
@@ -60,10 +60,10 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG','settingsconfig', function
                 'command': 'getstages'
             },
             timeout: 3000,
-            url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
+            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         });
     }
-    this.resetConnectionError = function(){
+    this.resetConnectionError = function () {
         $scope.connectionError = false;
     }
 

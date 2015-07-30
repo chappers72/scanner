@@ -68,13 +68,11 @@
             <div flex>
                 <md-button ng-show="stageStatus==='in' || inoutButtons==='in'" ng-click="scanIn(item.orderid)"
                            class="md-raised md-primary full-width succ"><h3>
-                    Confirm Order In                     <ng-md-icon icon="done" class="fill-white button-icon-padding" size="24px"></ng-md-icon>
+                    Confirm Order In <ng-md-icon icon="done" class="fill-white button-icon-padding" size="24px"></ng-md-icon>
                 </h3>
-
                 </md-button>
                 <md-button ng-show="stageStatus==='out'" ng-click="scanOut(item.orderid)"
-                           class="md-raised md-primary full-width succ"><h3>
-                    Confirm Order Out</h3>
+                           class="md-raised md-primary full-width succ"><h3>Confirm Order Out</h3>
                     <ng-md-icon icon="launch" class="fill-white"></ng-md-icon>
                 </md-button>
             </div>
@@ -82,6 +80,12 @@
                 <md-button ng-click="changestate('scan home')"
                            class="md-raised full-width">
                     <h3>Cancel</h3>
+                </md-button>
+            </div>
+            <div flex ng-show="qaRejectButton==='true'">
+                <md-button ng-click="scanQAReject(item.orderid)"
+                           class="md-raised md-warn full-width">
+                    <h3>QA Reject</h3>
                 </md-button>
             </div>
         </div>
@@ -111,11 +115,7 @@
                            style="margin-top:150px;width: 300px !important">OK
                 </md-button>
             </div>
-
         </div>
-        Config check result: {{inoutButtons}}<br/>
-        In out date empty result: {{stageStatus}}<br/>
-        Item {{item}}
     </div>
 </div>
 

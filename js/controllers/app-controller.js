@@ -13,7 +13,10 @@ app.controller('scan',
         'orderid',
         '$timeout',
         'settingsconfig',
-        function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig) {
+        '$q',
+        'GENERAL_CONFIG',
+        function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig,$q,GENERAL_CONFIG) {
+
             $scope.qr = {}
             $scope.$on('$viewContentLoaded',
                 function (event, viewConfig) {
@@ -84,7 +87,21 @@ app.controller('scan',
                     .then(function (_data) {
                         $scope.scanErr = false;
                         $scope.scanSucc = true;
-                        $scope.scanresult = 'Thank you. Your item has been scanned in and updated successfully.';
+                        $scope.scanresult = 'Thank you. Your order has been scanned in and updated successfully.';
+                    }, function (err) {
+                        $scope.scanErr = true;
+                        $scope.scanSucc = false;
+                        $scope.scanresult = err.statusText;
+                    });
+            };
+
+            //QA Reject
+            $scope.scanQAReject = function (a) {
+                orderconfig.scanQAReject(a, $scope.settings.station)
+                    .then(function (_data) {
+                        $scope.scanErr = false;
+                        $scope.scanSucc = true;
+                        $scope.scanresult = 'Thank you. Your order has been updated successfully.';
                     }, function (err) {
                         $scope.scanErr = true;
                         $scope.scanSucc = false;
@@ -97,7 +114,7 @@ app.controller('scan',
                     .then(function (_data) {
                         $scope.scanErr = false;
                         $scope.scanSucc = true;
-                        $scope.scanresult = 'Thank you. Your item has been scanned out and updated successfully.';
+                        $scope.scanresult = 'Thank you. Your order has been scanned out and updated successfully.';
                     }, function (err) {
                         $scope.scanErr = true;
                         $scope.scanSucc = false;
@@ -121,5 +138,21 @@ app.controller('scan',
             }
             //End config code
 
+            //Type ahead code
+            $scope.querySearch = function(query) {
+                return $http({
+                    method: 'POST',
+                    data: {
+                        'orderid': query,
+                        'command': 'typeahead'
+                    },
+                    url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
+                })
+                    .then(function (_data) {
+                        return _data.data;
+                    })
+
+            }
+            //End Type ahead code
 
         }])

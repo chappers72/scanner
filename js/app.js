@@ -79,9 +79,8 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
             resolve: {
                 promiseObj: function (orderid, orderconfig) {
                     // $http returns a promise for the url data
-                    //production
                     return orderconfig.checkOrder(orderid.getOrderId()).then(function (_data) {
-                        if (_data.order) {
+                        if (_data.data.order) {
                             return _data
                         }
                         else {

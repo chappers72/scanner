@@ -85,7 +85,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
                             return _data
                         }
                         else {
-                            return {'data': {'order': '', 'msg': err.statusText}}
+                            return {'data': {'order': '', 'msg': 'No order data was found for this reference.'}}
                         };
                     }, function (err) {
                         if (err.statusText == '') {

@@ -13,9 +13,7 @@ app.controller('scan',
         'orderid',
         '$timeout',
         'settingsconfig',
-        '$q',
-        'GENERAL_CONFIG',
-        function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig,$q,GENERAL_CONFIG) {
+        function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig) {
 
             $scope.qr = {}
             $scope.$on('$viewContentLoaded',

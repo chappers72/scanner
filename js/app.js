@@ -70,7 +70,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
                 //set default msg
                 $scope.errMsg = 'A connection error has occurred. No data can be retrieved.';
                 $scope.item = orderid.setStageGraduation(promiseObj.data.order);
-                orderid.orderObject=promiseObj.data.order;
+                orderid.orderObject = promiseObj.data.order;
                 $scope.stageStatus = orderid.setStatus(promiseObj.data.order, $scope.settings.station, $scope.inout);
                 $scope.inoutButtons = orderid.configDataCheck(promiseObj.data.order.currentStage);
                 $scope.qaRejectButton = orderid.configQARejectCheck();
@@ -81,7 +81,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
                     // $http returns a promise for the url data
                     //production
                     return orderconfig.checkOrder(orderid.getOrderId()).then(function (_data) {
-                        return _data;
+                        if (_data.order) {
+                            return _data
+                        }
+                        else {
+                            return {'data': {'order': '', 'msg': err.statusText}}
+                        };
                     }, function (err) {
                         if (err.statusText == '') {
                             err.statusText = 'A connection error has occurred. No data can be retrieved. Click OK to edit your settings.'

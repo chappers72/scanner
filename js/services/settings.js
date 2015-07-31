@@ -7,6 +7,7 @@ app.service('settingsconfig', ['$q', function ($q) {
     var station="";
      var inoutstages=[];
     var commands=[];
+    var user = {};
     return {
         getVersion: function () {
             return chrome.runtime.getManifest().version;
@@ -17,6 +18,7 @@ app.service('settingsconfig', ['$q', function ($q) {
             var self = this;
             chrome.storage.local.get(key, function(data) {
                 self.serverendpoint = data[key].server;
+                self.user = data[key].user;
                 deferred.resolve(data[key]);
             });
 

@@ -102,7 +102,6 @@ app.controller('scan',
 
                     for(var i=0;i<orderid.orderObject.buttons.length;i++){
                         if(orderid.orderObject.buttons[i]===key) {
-                            console.log('Have button ' + key);
                             return true;
                         }
                     }

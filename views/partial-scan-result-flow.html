@@ -1,13 +1,15 @@
 <!--partial-scan-result.html-->
-<div ng-show="stageStatus==='error'" layout="row" layout-margin layout-fill layout-padding class="err">
-    <div flex="90">
-        <h2>{{errMsg}}
-            <md-button ng-click="changestate('scan home')" class="md-raised md-warn">OK</md-button>
-        </h2>
+<section ng-show="stageStatus==='error'">
+    <div layout="row" layout-margin layout-fill layout-padding class="err rounded-corner">
+    <div flex>
+        <h2>{{errMsg}} <span ng-show="orderid">'{{orderid}}'</span></h2>
     </div>
-
 </div>
-
+<div layout="column" layout-fill layout-align="center center">
+    <md-button class="md-raised middleButton" ng-click="changestate('scan home')">
+        <h3 >OK</h3>
+    </md-button></div>
+</section>
 <div layout="row" layout-wrap layout-padding id="mainbody" ng-show="stageStatus!=='error'">
     <div flex="50">
         <md-whiteframe class="md-whiteframe-z2" layout layout-align="center left">

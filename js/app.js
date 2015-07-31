@@ -75,6 +75,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
                 $scope.inoutButtons = orderid.configDataCheck(promiseObj.data.order.currentStage);
                 $scope.qaRejectButton = orderid.configQARejectCheck();
                 $scope.errMsg = promiseObj.data.msg;
+                $scope.orderid = orderid.getOrderId();
             },
             resolve: {
                 promiseObj: function (orderid, orderconfig) {
@@ -84,7 +85,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
                             return _data
                         }
                         else {
-                            return {'data': {'order': '', 'msg': 'No order data was found for this reference.'}}
+                            return {'data': {'order':'', 'msg': 'No order data was found for this reference.'}}
                         };
                     }, function (err) {
                         if (err.statusText == '') {
@@ -102,7 +103,6 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
 angular.module('http-post-fix', [], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-    $httpProvider.defaults.headers.common.Authorization = 'Basic ' + window.btoa("Test User:password");
     // Override $http service's default transformRequest
     $httpProvider.defaults.transformRequest = [function (data) {
         /**

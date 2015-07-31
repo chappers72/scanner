@@ -4,6 +4,7 @@
 var app = angular.module('scanner');
 app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', function ($http, GENERAL_CONFIG, settingsconfig) {
 
+
     //CHECK ORDER
     this.checkOrder = function (orderid) {
         return $http({
@@ -13,6 +14,8 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', functio
                 'command': 'check',
                 'stage':settingsconfig.station.toLowerCase().replace(/ /g, '')
             },
+            headers: {
+                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
             timeout: 3000,
             url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         })
@@ -26,6 +29,8 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', functio
                 'command': 'in',
                 'stage': stage.toLowerCase().replace(/ /g, '')
             },
+            headers: {
+                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
             url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         })
     };
@@ -38,6 +43,8 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', functio
                 'command': 'out',
                 'stage': stage.toLowerCase().replace(/ /g, '')
             },
+            headers: {
+                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
             url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         });
     };
@@ -50,6 +57,8 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', functio
                 'command': 'outreject',
                 'stage': stage.toLowerCase().replace(/ /g, '')
             },
+            headers: {
+                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
             url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         });
     };
@@ -60,6 +69,8 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', functio
             data: {
                 'command': 'getstages'
             },
+            headers: {
+                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
             timeout: 3000,
             url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         });

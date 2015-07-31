@@ -16,17 +16,24 @@
         </md-content>
     <form name="form">
     <md-content layout-padding>
-            <h2 class="md-title">User Settings</h2>
-            <p>
+        <h2 class="md-title">User Settings</h2>
+
+        <div layout="row" layout-margin>
+            <div flex>
+
                 <md-input-container>
                     <label>Username</label>
                     <input type="text" class="inputLight" ng-model="settings.user.name" required>
                 </md-input-container>
-                <md-input-container>
+                </div>
+            <div flex>
+
+            <md-input-container>
                     <label>Password</label>
                     <input type="text" class="inputLight" ng-model="settings.user.password" required>
-                </md-input-container>
-            </p>
+</md-input-container>
+                </div>
+            </div>
         </section>
         <section ng-hide="items.networkerror">
             <h2 class="md-title">Station</h2>

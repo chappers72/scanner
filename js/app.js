@@ -47,15 +47,16 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
             url: '/config',
             templateUrl: 'views/partial-settings.html',
             controller: function ($scope, promiseObj) {
-                // You can be sure that promiseObj is ready to use!
-                $scope.config = {};
-                $scope.items = promiseObj.data;
+                 $scope.config = {};
+                $scope.items = promiseObj.data; //Setting Information got via AJAX request
             },
             resolve: {
-                promiseObj: function (orderconfig) {
+                promiseObj: function (orderconfig,log) {
                     return orderconfig.getStages().then(function (_data) {
+                        log.logMsg("Got List of Stages in preparation for displaying Settings Screen")
                         return _data;
                     }, function (err) {
+                        log.logMsg("ERROR >> " + err.statusText)
                         return {'data': {'networkerror': 'true'}}
                     });
 
@@ -66,28 +67,24 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
             url: '/scan-result-flow',
             templateUrl: 'views/partial-scan-result-flow.html',
             controller: function ($scope, promiseObj, orderid) {
-                // You can be sure that promiseObj is ready to use!
-                //set default msg
-                $scope.errMsg = 'A connection error has occurred. No data can be retrieved.';
                 $scope.item = orderid.setStageGraduation(promiseObj.data.order);
                 orderid.orderObject = promiseObj.data.order;
-                $scope.stageStatus = orderid.setStatus(promiseObj.data.order, $scope.settings.station, $scope.inout);
-                $scope.inoutButtons = orderid.configDataCheck(promiseObj.data.order.currentStage);
-                $scope.qaRejectButton = orderid.configQARejectCheck();
                 $scope.errMsg = promiseObj.data.msg;
-                $scope.orderid = orderid.getOrderId();
             },
             resolve: {
-                promiseObj: function (orderid, orderconfig) {
+                promiseObj: function (orderid, orderconfig,log) {
                     // $http returns a promise for the url data
-                    return orderconfig.checkOrder(orderid.getOrderId()).then(function (_data) {
+                    return orderconfig.sendCommand(orderid.getOrderId(),'check').then(function (_data) {
                         if (_data.data.order) {
+                            log.logMsg("Success in getting Order " + _data.data.order.orderid);
                             return _data
                         }
                         else {
+                            log.logMsg("ERROR >> No Order found but we got a HTTP 200");
                             return {'data': {'order':'', 'msg': 'No order data was found for this reference.'}}
                         };
                     }, function (err) {
+                        log.logMsg("ERROR >> " + err.statusText);
                         if (err.statusText == '') {
                             err.statusText = 'A connection error has occurred. No data can be retrieved. Click OK to edit your settings.'
                         }

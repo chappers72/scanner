@@ -3,15 +3,18 @@
  * This function looks for a result (res) and continus to check an output div for a result from the qr reader code contained in qrcode.js
  */
 var app = angular.module('scanner');
-app.factory('qrfactory', function ($q, $timeout, orderid) {
+app.factory('qrfactory', function ($q, $timeout, orderid,log) {
 
     //This resets the 'res' so that we can clear the state of having a result.
     var reset = function(){
+        log.logMsg('Scan reset called')
         this.res = false;
     };
 
     //Parent function which returns for the deferred promise. The load function is called to start the process of looking for a result.
     var scan = function () {
+        log.logMsg('Scan called')
+
         var defered = $q.defer();
         var gCtx = null;
         var gCanvas = null;
@@ -51,14 +54,12 @@ app.factory('qrfactory', function ($q, $timeout, orderid) {
                         return;
                     }
                     catch (e) {
-                        console.log(e);
                         if (this.res !== true)
                             setTimeout(captureToCanvas, 500);
                     }
                     ;
                 }
                 catch (e) {
-                    console.log(e);
                     if (this.res !== true)
                         setTimeout(captureToCanvas, 500);
                 }

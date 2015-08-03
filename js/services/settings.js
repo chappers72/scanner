@@ -3,37 +3,40 @@
  */
 var app = angular.module('scanner');
 app.service('settingsconfig', ['$q', function ($q) {
-   var serverendpoint ='31.49.241.45';
+
+    //Change to false to turn off console logging
+    var logEnabled=true;
+
+    //Default Server Address
+    var serverendpoint ='31.49.241.45';
+    //This Station Name - held locally
     var station="";
-     var inoutstages=[];
-    var commands=[];
+    //Standard User - used for Authentication
     var user = {};
+
     return {
+        //Get Manifest Version Number
         getVersion: function () {
             return chrome.runtime.getManifest().version;
         },
 
-        get: function (key) {
+        //Load up settings which have been saved to local storage
+        getSettingsFromLocalVariables: function (key) {
             var deferred = $q.defer();
             var self = this;
             chrome.storage.local.get(key, function(data) {
                 self.serverendpoint = data[key].server;
                 self.user = data[key].user;
+                self.station = data[key].station;
                 deferred.resolve(data[key]);
             });
 
             return deferred.promise;
         },
-        stateconfigdata: function(_data,station){
-            var self = this;
-            self.station=station;
-            for(i = 0;i < _data.length;i++){
-                if(station==_data[i].stage){
-                    this.inoutstages=_data[i].inStages;
-                    this.commands=_data[i].commands;
-                }
-            }
 
+        getLogEnabled:function(){
+            return logEnabled;
         }
+
     }
 }])

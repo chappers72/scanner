@@ -2,16 +2,20 @@
  * Created by Mark on 26/05/2015.
  */
 var app = angular.module('scanner');
-app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', function ($http, GENERAL_CONFIG, settingsconfig) {
+app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig','log', function ($http, GENERAL_CONFIG, settingsconfig,log) {
 
 
-    //CHECK ORDER
-    this.checkOrder = function (orderid) {
+    //Command to send to service
+    //This will cover check, in, out, outreject
+    this.sendCommand=function(orderid,command){
+        var url='http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
+        log.logMsg('EXTERNAL >> sendCommand ('+command+') - '+orderid+' >> ' + url);
+
         return $http({
             method: 'POST',
             data: {
                 'orderid': orderid,
-                'command': 'check',
+                'command': command,
                 'stage':settingsconfig.station.toLowerCase().replace(/ /g, '')
             },
             headers: {
@@ -19,51 +23,14 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', functio
             timeout: 3000,
             url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
         })
-    };
 
-    this.orderIn = function (orderid, stage) {
-        return $http({
-            method: 'POST',
-            data: {
-                'orderid': orderid,
-                'command': 'in',
-                'stage': stage.toLowerCase().replace(/ /g, '')
-            },
-            headers: {
-                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
-            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
-        })
-    };
+    }
 
-    this.orderOut = function (orderid, stage) {
-        return $http({
-            method: 'POST',
-            data: {
-                'orderid': orderid,
-                'command': 'out',
-                'stage': stage.toLowerCase().replace(/ /g, '')
-            },
-            headers: {
-                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
-            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
-        });
-    };
-
-    this.orderReject = function (orderid, stage) {
-        return $http({
-            method: 'POST',
-            data: {
-                'orderid': orderid,
-                'command': 'outreject',
-                'stage': stage.toLowerCase().replace(/ /g, '')
-            },
-            headers: {
-                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
-            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
-        });
-    };
 
     this.getStages = function () {
+        var url='http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
+        log.logMsg('EXTERNAL >> getStages >> ' + url);
+
         return $http({
             method: 'POST',
             data: {
@@ -72,9 +39,10 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig', functio
             headers: {
                 'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
             timeout: 3000,
-            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
+            url: url
         });
     }
+
     this.resetConnectionError = function () {
         $scope.connectionError = false;
     }

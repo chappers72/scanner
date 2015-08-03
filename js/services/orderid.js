@@ -34,22 +34,8 @@ app.service('orderid', ['settingsconfig', function (settingsconfig) {
         }
     };
 
-    this.configDataCheck = function (currentStage) {
-        if (settingsconfig.inoutstages.indexOf(currentStage) > -1) {
-            return 'in'
-        } else {
-            return 'none'
-        }
-    };
 
-    this.configQARejectCheck = function () {
-        if (settingsconfig.commands.indexOf('qareject') > -1) {
-            return 'true'
-        } else {
-            return 'false'
-        }
-    };
-
+    //This function decorates the Order Object with an opac property
     this.setStageGraduation = function (_data) {
         if (_data) {
             var c = 0;

@@ -41,6 +41,9 @@ app.controller('scan',
                     log.logMsg('ERROR >> Settings missing')
                     $scope.changestate('settings');
                 }
+            },function(err){
+                log.logMsg('ERROR >> Settings missing')
+                $scope.changestate('settings');
             })
 
 

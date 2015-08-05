@@ -54,8 +54,10 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
                 promiseObj: function (orderconfig,log) {
                     return orderconfig.getStages().then(function (_data) {
                         log.logMsg("Got List of Stages in preparation for displaying Settings Screen")
+                         orderconfig.stages=_data;
                         return _data;
                     }, function (err) {
+
                         log.logMsg("ERROR >> " + err.statusText)
                         return {'data': {'networkerror': 'true'}}
                     });

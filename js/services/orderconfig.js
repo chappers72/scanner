@@ -5,31 +5,53 @@ var app = angular.module('scanner');
 app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig','log', function ($http, GENERAL_CONFIG, settingsconfig,log) {
 
 
+    var stages={}; //The stages
+
     //Command to send to service
     //This will cover check, in, out, outreject
     this.sendCommand=function(orderid,command){
-        var url='http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
+        var url='http://' + settingsconfig.getServerEndPoint() + GENERAL_CONFIG.API_URL
         log.logMsg('EXTERNAL >> sendCommand ('+command+') - '+orderid+' >> ' + url);
 
+        var username="";
+        var password="";
+        var station="";
+
+        if(settingsconfig.getUser()){
+            username=settingsconfig.getUser().name;
+            password=settingsconfig.getUser().password;
+        }
+        if(settingsconfig.getStation()){
+            station=settingsconfig.getStation();
+        }
         return $http({
             method: 'POST',
             data: {
                 'orderid': orderid,
                 'command': command,
-                'stage':settingsconfig.station.toLowerCase().replace(/ /g, '')
+                'stage':station.toLowerCase().replace(/ /g, '')
             },
             headers: {
-                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
+                'Authorization': 'Basic ' + window.btoa(username+':'+password)},
             timeout: 3000,
-            url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
+            url: url
         })
 
     }
 
 
     this.getStages = function () {
-        var url='http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
+        console.log(settingsconfig)
+        var url='http://' + settingsconfig.getServerEndPoint() + GENERAL_CONFIG.API_URL
         log.logMsg('EXTERNAL >> getStages >> ' + url);
+
+        var username="";
+        var password="";
+
+        if(settingsconfig.getUser()){
+            username=settingsconfig.getUser().name;
+            password=settingsconfig.getUser().password;
+        }
 
         return $http({
             method: 'POST',
@@ -37,7 +59,7 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig','log', f
                 'command': 'getstages'
             },
             headers: {
-                'Authorization': 'Basic ' + window.btoa(settingsconfig.user.name+':'+settingsconfig.user.password)},
+                'Authorization': 'Basic ' + window.btoa(username+':'+password)},
             timeout: 3000,
             url: url
         });

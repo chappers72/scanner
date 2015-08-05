@@ -25,17 +25,38 @@ app.service('settingsconfig', ['$q', function ($q) {
             var deferred = $q.defer();
             var self = this;
             chrome.storage.local.get(key, function(data) {
-                self.serverendpoint = data[key].server;
-                self.user = data[key].user;
-                self.station = data[key].station;
-                deferred.resolve(data[key]);
+             if(data[key]){
+                 console.log(data[key])
+                if(data[key].server){
+                    self.serverendpoint = data[key].server;
+                }
+                if(data[key].user){
+                    self.user = data[key].user;
+                }
+                if(data[key].station){
+                    self.station = data[key].station;
+                }
+                 deferred.resolve(data[key]);
+             }else{
+                 deferred.reject('No Settings');
+             }
+
             });
 
             return deferred.promise;
         },
 
         getLogEnabled:function(){
-            return logEnabled;
+            return this.logEnabled;
+        },
+        getServerEndPoint:function(){
+            return this.serverendpoint;
+        },
+        getUser:function(){
+            return this.user;
+        },
+        getStation:function(){
+            return this.station;
         }
 
     }

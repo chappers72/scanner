@@ -9,3 +9,13 @@ chrome.app.runtime.onLaunched.addListener(function() {
         }
     });
 });
+
+chrome.commands.onCommand.addListener(function(command) {
+    console.log(command)
+    if (command == "Ctrl+M") {
+
+        var value = chrome.accessibilityFeatures.virtualKeyboard.get({'incognito': false}, function (callback) {
+            console.log(callback);
+        });
+    }
+});

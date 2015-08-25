@@ -1,10 +1,7 @@
-/**
- * Created by StevenChapman on 19/05/15.
- */
 {
-  "name": "Scanner",
-  "description": "All to use web cam to scan QR codes.",
-  "version": "0.1",
+  "name": "Trulife Scanner",
+  "description": "Production Tracking System",
+  "version": "1.4",
   "manifest_version": 2,
   "app": {
     "background": {
@@ -14,14 +11,23 @@
     }
   },
   "icons": {
-    "16": "/assets/images/icon-16.png",
     "128": "/assets/images/icon-128.png"
   },
   "permissions": [
+    "accessibilityFeatures.read",
+    "accessibilityFeatures.modify",
     "videoCapture",
     "storage",
-     "http://31.49.241.45/",
-    "http://cdnjs.cloudflare.com/",
-    "http://192.168.1.66/"
-  ]
+    "http://192.168.1.66/",
+    "http://192.168.1.3/"
+  ],
+  "commands": {
+    "Ctrl+M": {
+      "suggested_key": {
+        "default": "Ctrl+M"
+         },
+      "description": "Ctrl+M."
+    }
+  },
+  "kiosk_enabled": true
 }

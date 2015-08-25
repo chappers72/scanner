@@ -123,3 +123,8 @@ td {
     text-align: center
 }
 .rounded-corner{border-radius: 3px}
+
+.md-progress-circular{
+    width:200px;
+    height:200px;
+}

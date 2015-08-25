@@ -15,6 +15,21 @@ app.controller('scan',
         'settingsconfig',
         'log',
         function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig,log) {
+            $scope.displayIndicator=false;
+            $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+                if (toState.resolve) {
+                    console.log("Showing Spinner")
+                    $scope.displayIndicator=true;
+                    //$scope.showSpinner();
+                }
+            });
+            $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+                if (toState.resolve) {
+                    console.log("Hiding Spinner")
+                    $scope.displayIndicator=false;
+                    // $scope.hideSpinner();
+                }
+            });
 
             $scope.qr = {}
             $scope.$on('$viewContentLoaded',

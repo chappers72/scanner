@@ -26,7 +26,6 @@ app.service('settingsconfig', ['$q', function ($q) {
             var self = this;
             chrome.storage.local.get(key, function(data) {
              if(data[key]){
-                 console.log(data[key])
                 if(data[key].server){
                     self.serverendpoint = data[key].server;
                 }

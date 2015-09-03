@@ -41,7 +41,6 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig','log', f
 
 
     this.getStages = function () {
-        console.log(settingsconfig)
         var url='http://' + settingsconfig.getServerEndPoint() + GENERAL_CONFIG.API_URL
         log.logMsg('EXTERNAL >> getStages >> ' + url);
 

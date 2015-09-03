@@ -14,19 +14,26 @@ app.controller('scan',
         '$timeout',
         'settingsconfig',
         'log',
-        function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig,log) {
-            $scope.displayIndicator=false;
-            $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig, log) {
+            $scope.displayIndicator = false;
+
+            $scope.getStages = function () {
+                orderconfig.getStages().then(function (_data) {
+                    $scope.availableStages = _data.data;
+                });
+            }
+
+            $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
                 if (toState.resolve) {
                     console.log("Showing Spinner")
-                    $scope.displayIndicator=true;
+                    $scope.displayIndicator = true;
                     //$scope.showSpinner();
                 }
             });
-            $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+            $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 if (toState.resolve) {
                     console.log("Hiding Spinner")
-                    $scope.displayIndicator=false;
+                    $scope.displayIndicator = false;
                     // $scope.hideSpinner();
                 }
             });
@@ -51,12 +58,13 @@ app.controller('scan',
             settingsconfig.getSettingsFromLocalVariables('settings').then(function (_data) {
                 log.logMsg('Got Settings from Local Variables')
                 $scope.settings = _data;
+                $scope.getStages();
                 //If any of the variables are blank - then display settings screen.
                 if ($scope.settings.user.name == '' || $scope.settings.user.password == '' || $scope.settings.station == '' || $scope.settings.server == '') {
                     log.logMsg('ERROR >> Settings missing')
                     $scope.changestate('settings');
                 }
-            },function(err){
+            }, function (err) {
                 log.logMsg('ERROR >> Settings missing')
                 $scope.changestate('settings');
             })
@@ -88,7 +96,7 @@ app.controller('scan',
 
             //Manual Method for entering product code - passed the code the user entered
             $scope.lookupOrder = function (code) {
-                log.logMsg('Manual Lookup Order Called '+ code)
+                log.logMsg('Manual Lookup Order Called ' + code)
                 $scope.manualerr = false;
                 if (!code) {
                     console.log("ERROR >> Missing Order ID")
@@ -101,8 +109,8 @@ app.controller('scan',
             };
 
             //Command(s) - send command to Server to update Order
-            $scope.sendCommand=function(command){
-                orderconfig.sendCommand(orderid.getOrderId(),command)
+            $scope.sendCommand = function (command) {
+                orderconfig.sendCommand(orderid.getOrderId(), command)
                     .then(function (_data) {
                         log.logMsg('Success with command')
                         $scope.scanErr = false;
@@ -118,10 +126,10 @@ app.controller('scan',
 
 
             //Hide / show action button - checks Order Data which holds which buttons to display sent from server
-            $scope.hasButton=function(key){
-                if(orderid.orderObject.buttons){
-                    for(var i=0;i<orderid.orderObject.buttons.length;i++){
-                        if(orderid.orderObject.buttons[i]===key) {
+            $scope.hasButton = function (key) {
+                if (orderid.orderObject.buttons) {
+                    for (var i = 0; i < orderid.orderObject.buttons.length; i++) {
+                        if (orderid.orderObject.buttons[i] === key) {
                             log.logMsg('Order has Command ' + key)
                             return true;
                         }
@@ -129,7 +137,6 @@ app.controller('scan',
                 }
                 return false;
             }
-
 
 
             //Config code
@@ -149,17 +156,33 @@ app.controller('scan',
                     chrome.runtime.reload();
                 }, 2000);
             }
+
+            $scope.saveDepartment = function (_val) {
+                $scope.settingsUpdated = true;
+                chrome.storage.local.get('settings', function (_data) {
+                    var tmp = _data;
+                    tmp.settings.station = _val;
+
+                    // Save it using the Chrome extension storage API.
+                    chrome.storage.local.set(tmp);
+                    log.logMsg("Setting saved")
+                    $timeout(function () {
+                        chrome.runtime.reload();
+                    }, 2000);
+
+                })
+            }
             //End config code
 
             //Type ahead code
-            $scope.querySearch = function(query) {
+            $scope.querySearch = function (query) {
                 return $http({
                     method: 'POST',
                     data: {
                         'orderid': query,
                         'command': 'typeahead'
                     },
-                    url: 'http://'+settingsconfig.serverendpoint+GENERAL_CONFIG.API_URL
+                    url: 'http://' + settingsconfig.serverendpoint + GENERAL_CONFIG.API_URL
                 })
                     .then(function (_data) {
                         return _data.data;
@@ -169,3 +192,12 @@ app.controller('scan',
             //End Type ahead code
 
         }])
+app.directive('changeStation', function () {
+    var theHTML = '<div layout="row" layout-wrap layout-align="center"><h4>Change Your Department</h4></div>'
+    theHTML = theHTML + '<div layout="row" layout-wrap layout-align="center"><md-button flex="20" ng-repeat="items in availableStages" class="md-raised middleButton" style="margin:10px" ng-click="saveDepartment(items.stage)">'
+    theHTML = theHTML + '<h3>{{items.stage}}</h3></md-button></div><div layout="row" layout-margin layout-padding ng-show="settingsUpdated" class="succ"><div flex="100"><h2>Settings updated. The application will now restart.</h2></div></div>'
+
+    return {
+        template: theHTML
+    }
+})

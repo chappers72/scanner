@@ -48,13 +48,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
             templateUrl: 'views/partial-settings.html',
             controller: function ($scope, promiseObj) {
                  $scope.config = {};
-                $scope.items = promiseObj.data; //Setting Information got via AJAX request
+                 $scope.items = promiseObj.data; //Setting Information got via AJAX request
             },
             resolve: {
                 promiseObj: function (orderconfig,log) {
                     return orderconfig.getStages().then(function (_data) {
                         log.logMsg("Got List of Stages in preparation for displaying Settings Screen")
-                         orderconfig.stages=_data;
                         return _data;
                     }, function (err) {
 

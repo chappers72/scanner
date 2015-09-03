@@ -19,7 +19,8 @@
     "videoCapture",
     "storage",
     "http://192.168.1.66/",
-    "http://192.168.1.3/"
+    "http://192.168.1.3/",
+    "http://83.167.179.42/"
   ],
   "commands": {
     "Ctrl+M": {

@@ -55,7 +55,7 @@
                     <td width="100">Count</td>
                 </tr>
                 <tr ng-repeat="stages in item.stageInformation"
-                    ng-class="(stages.currentStage===true) ? 'curr-bordered' :(stages.in!=='') ? 'succ-bordered' : ''"
+                    ng-class="(item.currentStage===stages.stageKey) ? 'curr-bordered' :(stages.in!=='') ? 'succ-bordered' : ''"
                     style="height: 1.9em">
                     <td style="font-size:1.4em;font-weight:bold;text-align: right"> {{stages.stageName}}</td>
                     <td align="center"> {{stages.in}}</td>
@@ -92,18 +92,6 @@
                 <md-button ng-click="sendCommand('outreject')"
                            class="md-raised md-warn full-width">
                     <h3>Final Inspection Reject</h3>
-                </md-button>
-            </div>
-            <div flex ng-show="hasButton('finaldispatch')">
-                <md-button ng-click="sendCommand('finaldispatch')"
-                           class="md-raised md-warn full-width">
-                    <h3>Final Dispatch</h3>
-                </md-button>
-            </div>
-            <div flex ng-show="hasButton('roughfittingdispatch')">
-                <md-button ng-click="sendCommand('roughfittingdispatch')"
-                           class="md-raised md-warn full-width">
-                    <h3>Rough Fitting Dispatch</h3>
                 </md-button>
             </div>
         </div>

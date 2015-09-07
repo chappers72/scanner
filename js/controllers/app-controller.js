@@ -158,17 +158,19 @@ app.controller('scan',
             }
 
             $scope.saveDepartment = function (_val) {
-                $scope.settingsUpdated = true;
+             //   $scope.settingsUpdated = true;
                 chrome.storage.local.get('settings', function (_data) {
                     var tmp = _data;
                     tmp.settings.station = _val;
 
                     // Save it using the Chrome extension storage API.
                     chrome.storage.local.set(tmp);
+
                     log.logMsg("Setting saved")
-                    $timeout(function () {
-                        chrome.runtime.reload();
-                    }, 2000);
+                   $timeout(function () {
+                       settingsconfig.station=_val;
+                       $scope.settings=tmp.settings;
+                   }, 10);
 
                 })
             }
@@ -204,7 +206,8 @@ app.controller('scan',
         }])
 app.directive('changeStation', function () {
     var theHTML = '<div layout="row" layout-wrap layout-align="center"><h4>Change Your Department</h4></div>'
-    theHTML = theHTML + '<div layout="row" layout-wrap layout-align="center"><md-button flex="20" ng-repeat="items in availableStages | filter:filterFn" ng-class="{\'md-primary\':settings.station===items.stage}" class="md-raised middleButton" style="margin:10px" ng-click="saveDepartment(items.stage)">'
+    theHTML = theHTML + '<div layout="row" layout-wrap layout-align="center">' +
+    '<md-button flex="20" ng-repeat="items in availableStages | filter:filterFn" ng-class="{\'md-primary\':settings.station===items.stage}" class="md-raised middleButton" style="margin:10px" ng-click="saveDepartment(items.stage)">'
     theHTML = theHTML + '<h3>{{items.stage}}</h3></md-button></div><div layout="row" layout-margin layout-padding ng-show="settingsUpdated" class="succ"><div flex="100"><h2>Settings updated. The application will now restart.</h2></div></div>'
 
     return {

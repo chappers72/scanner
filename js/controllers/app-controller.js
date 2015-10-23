@@ -108,6 +108,8 @@ app.controller('scan',
                 $scope.changestate('scan-result-flow');
             };
 
+            $scope.outDepartment=""
+
             //Command(s) - send command to Server to update Order
             $scope.sendCommand = function (command) {
                 orderconfig.sendCommand(orderid.getOrderId(), command)

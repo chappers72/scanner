@@ -82,11 +82,16 @@
     <div flex ng-show="hasButton('out')">
         <md-button ng-click="sendCommand('out')"
                    class="md-raised md-primary full-width succ">
-            <h3>Confirm Order Out</h3>
-            <ng-md-icon icon="launch" class="fill-white"></ng-md-icon>
+            <h3>Confirm Order Out to >> </h3>
         </md-button>
-    </div>
 
+    </div>
+<div flex ng-show="hasButton('out')">
+    <md-select ng-model="outDepartment" required style="min-width:200px" class="outDepartment">
+        <md-option ng-repeat="item in availableStages" value="{{item.stage}}">{{item.stage}}
+        </md-option>
+    </md-select>
+</div>
     <div flex ng-show="hasButton('finaldispatch')">
         <md-button ng-click="sendCommand('finaldispatch')"
                    class="md-raised full-width">

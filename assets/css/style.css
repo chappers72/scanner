@@ -128,3 +128,13 @@ td {
     width:200px;
     height:200px;
 }
+.outDepartment{
+    font-size: 30px;
+    border: 2px dashed white;
+    min-width: 400px;
+    padding: 20px;
+    margin-left: -30px;
+    margin-top: 0px;
+    background-color: rgb(55, 132, 55);
+    color: white;
+}

@@ -29,7 +29,7 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig','log', f
             data: {
                 'orderid': orderid,
                 'command': command,
-                'stage':station.toLowerCase().replace(/ /g, '')
+                'currentstage':station.toLowerCase().replace(/ /g, '')
             },
             headers: {
                 'Authorization': 'Basic ' + window.btoa(username+':'+password)},

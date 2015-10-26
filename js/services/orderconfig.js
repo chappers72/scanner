@@ -9,13 +9,19 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig','log', f
 
     //Command to send to service
     //This will cover check, in, out, outreject
-    this.sendCommand=function(orderid,command){
+    this.sendCommand=function(orderid,command,nextstage){
+        console.log("Next Stage: " + nextstage)
         var url='http://' + settingsconfig.getServerEndPoint() + GENERAL_CONFIG.API_URL
-        log.logMsg('EXTERNAL >> sendCommand ('+command+') - '+orderid+' >> ' + url);
+        log.logMsg('EXTERNAL >> sendCommand ('+command+') - '+orderid+' >> ' + url + ' - '+ nextstage);
 
         var username="";
         var password="";
         var station="";
+        var nextDepartment="";
+
+        if(nextstage){
+            nextDepartment=nextstage.toLowerCase().replace(/ /g, '')
+        }
 
         if(settingsconfig.getUser()){
             username=settingsconfig.getUser().name;
@@ -29,7 +35,8 @@ app.service('orderconfig', ['$http', 'GENERAL_CONFIG', 'settingsconfig','log', f
             data: {
                 'orderid': orderid,
                 'command': command,
-                'currentstage':station.toLowerCase().replace(/ /g, '')
+                'currentstage':station.toLowerCase().replace(/ /g, ''),
+                'nextstage':nextDepartment
             },
             headers: {
                 'Authorization': 'Basic ' + window.btoa(username+':'+password)},

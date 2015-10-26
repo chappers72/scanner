@@ -5,6 +5,7 @@ var app = angular.module('scanner');
 app.service('log', ['settingsconfig', function (settingsconfig) {
 
     this.logMsg=function(msg){
+        console.log(msg);
         if(settingsconfig.getLogEnabled()){
             console.log(msg);
         }

@@ -16,6 +16,7 @@ app.controller('scan',
         'log',
         function ($scope, qrfactory, $state, orderconfig, $http, orderid, $timeout, settingsconfig, log) {
             $scope.displayIndicator = false;
+            $scope.reportData={};
 
             $scope.getStages = function () {
                 orderconfig.getStages().then(function (_data) {
@@ -111,8 +112,8 @@ app.controller('scan',
             $scope.outDepartment=""
 
             //Command(s) - send command to Server to update Order
-            $scope.sendCommand = function (command) {
-                orderconfig.sendCommand(orderid.getOrderId(), command)
+            $scope.sendCommand = function (command,outDepartment) {
+                orderconfig.sendCommand(orderid.getOrderId(), command,outDepartment)
                     .then(function (_data) {
                         log.logMsg('Success with command')
                         $scope.scanErr = false;
@@ -199,6 +200,26 @@ app.controller('scan',
                 // Do some tests
 
                 if(ob.selectable == 'Yes')
+                {
+                    return true; // this will be listed in the results
+                }
+
+                return false; // otherwise it won't be within the results
+            };
+            $scope.filterCurrentDepartment = function(obj)
+            {
+                // Do some tests
+                if(obj.stage !==$scope.settings.station  )
+                {
+                    return true; // this will be listed in the results
+                }
+
+                return false; // otherwise it won't be within the results
+            };
+            $scope.filterRemoveDispatch= function(obj)
+            {
+                // Do some tests
+                if(obj.stage !=='Dispatch'  )
                 {
                     return true; // this will be listed in the results
                 }

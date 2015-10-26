@@ -21,8 +21,9 @@
                 <div class="station-header" ng-show="settings.station">{{settings.station}} Department</div><span ng-hide="settings.station">No department set</span>
             </div>
             <div flex="33" class="text-right">
-                <md-button class="md-raised md-padd-left" ng-click="changestate('scan')"> Scan <ng-md-icon class="button-icon-padding" icon="videocam"></ng-md-icon></md-button>
-                <md-button class="md-raised md-padd-left" ng-click="changestate('manual')"> Manual <ng-md-icon class="button-icon-padding" icon="input"></ng-md-icon></md-button>
+                <md-button ng-show="settings.station" class="md-raised md-padd-left" ng-click="changestate('scan')"> Scan <ng-md-icon class="button-icon-padding" icon="videocam"></ng-md-icon></md-button>
+                <md-button ng-show="settings.station" class="md-raised md-padd-left" ng-click="changestate('manual')"> Manual <ng-md-icon class="button-icon-padding" icon="input"></ng-md-icon></md-button>
+                <md-button ng-show="settings.station" class="md-raised md-padd-left" ng-click="changestate('report')"> Department Report <ng-md-icon class="button-icon-padding" icon="input"></ng-md-icon></md-button>
                 <md-button class="md-raised md-padd-left" ng-click="changestate('settings')"> Settings <ng-md-icon class="button-icon-padding" icon="settings_applications"></ng-md-icon></md-button>
             </div>
            </div>

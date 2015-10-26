@@ -1,0 +1,23 @@
+<!--partial-config.tpml-->
+<div id="mainbody">
+    <md-content layout-padding>
+        <h3>{{settings.station}} Report</h3>
+
+<table  class="result-table" cellpadding="7" cellspacing="0" >
+    <thead><th></th><th>Manufacture Date</th><th>Scanned Into Dept</th><th>Order ID</th><th>Order Type</th><th>Customer</th><th>Orthotist</th></thead>
+    <tbody>
+<tr ng-repeat="order in reportData">
+    <td><img src="/assets/images/hand.png" ng-if="order.onhold"/></td>
+    <td>{{order.manDate}}</td>
+    <td>{{order.currentScanInDateTime}}</td>
+    <td>{{order.orderid}}</td>
+    <td>{{order.ordertype}}</td>
+    <td>{{order.customer}}</td>
+    <td>{{order.orthotist}}</td>
+    <td><button ng-click="lookupOrder(order.orderid)">Open</button></td>
+</tr>
+    </tbody>
+</table>
+
+    </md-content>
+</div>

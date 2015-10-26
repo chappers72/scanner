@@ -33,7 +33,19 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
     $stateProvider
         .state('scan home', {
             url: '/scan-home',
-            templateUrl: 'views/partial-scan-home.html'
+            templateUrl: 'views/partial-scan-home.html',
+            controller:function($scope,promiseObj){
+                if(promiseObj.data){
+                    $scope.availableStages = promiseObj.data;
+                }
+            },
+            resolve:{
+                    promiseObj: function (orderconfig,log) {
+                    return  orderconfig.getStages().then(function (_data) {
+                        return _data;
+                    });
+                }
+            }
         })
         .state('scan', {
             url: '/scan',
@@ -42,6 +54,43 @@ app.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
         .state('manual', {
             url: '/manual',
             templateUrl: 'views/partial-manual.html'
+        })
+        .state('report', {
+            url: '/report',
+            templateUrl: 'views/partial-report.html',
+            controller: function ($scope, promiseObj) {
+                $scope.reportData={}
+                if(promiseObj.data.Orders){
+                    $scope.reportData = promiseObj.data.Orders;
+                }
+
+            },
+            resolve: {
+                promiseObj: function (orderconfig,log) {
+                    // $http returns a promise for the url data
+                    return orderconfig.sendCommand('','report').then(function (_data) {
+                        if(!_data.data){
+                            return{'data':{'Orders':[]}}
+                        }
+                        if (_data.data.Orders) {
+                            log.logMsg("Success in getting Report");
+                            return _data
+                        }
+                        else {
+                            log.logMsg("ERROR >> No Order found but we got a HTTP 200");
+                            return {'data': {'Orders':[], 'msg': 'No order data was found for this reference.'}}
+                        };
+                    }, function (err) {
+                        log.logMsg("ERROR >> " + err.statusText);
+                        if (err.statusText == '') {
+                            err.statusText = 'A connection error has occurred. No data can be retrieved. Click OK to edit your settings.'
+                        }
+                        return {'data': {'order': '', 'msg': err.statusText}}
+                    });
+
+
+                }
+            }
         })
         .state('settings', {
             url: '/config',

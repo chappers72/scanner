@@ -58,7 +58,8 @@
                 <tr ng-repeat="stages in item.stageInformation"
                     ng-class="(item.currentStage===stages.stageKey) ? 'curr-bordered' :(stages.in!=='') ? 'succ-bordered' : ''"
                     style="height: 1.9em">
-                    <td style="font-size:1.4em;font-weight:bold;text-align: right"> {{stages.stageName}}</td>
+                    <td style="font-size:1.4em;font-weight:bold;text-align: right"><img src="/assets/images/hand.png" ng-if="stages.onhold"/> {{stages.stageName}}
+                    <span ng-if="stages.onhold"> (On Hold)</span></td>
                     <td align="center"> {{stages.in}}</td>
                     <td align="center"> {{stages.out}}</td>
                     <td align="center"> {{stages.count}}</td>
@@ -80,36 +81,50 @@
         </md-button>
     </div>
     <div flex ng-show="hasButton('out')">
-        <md-button ng-click="sendCommand('out')"
-                   class="md-raised md-primary full-width succ">
-            <h3>Confirm Order Out to >> </h3>
+        <md-button ng-click="sendCommand('out',outDepartment)"
+                   class="md-raised full-width" ng-disabled="!outDepartment">
+            <h3 ng-show="outDepartment">Confirm Order Out to >>></h3>
+            <h3 ng-show="!outDepartment">Select Department First >> </h3>
         </md-button>
 
     </div>
 <div flex ng-show="hasButton('out')">
-    <md-select ng-model="outDepartment" required style="min-width:200px" class="outDepartment">
-        <md-option ng-repeat="item in availableStages" value="{{item.stage}}">{{item.stage}}
+    <md-select ng-model="outDepartment" required class="outDepartment">
+        <md-option ng-repeat="item in availableStages | filter:filterFn | filter:filterCurrentDepartment | filter:filterRemoveDispatch" value="{{item.stage}}">{{item.stage}}
         </md-option>
     </md-select>
 </div>
     <div flex ng-show="hasButton('finaldispatch')">
-        <md-button ng-click="sendCommand('finaldispatch')"
+        <md-button ng-click="sendCommand('out','finaldispatch')"
                    class="md-raised full-width">
             <h3>Final Dispatch</h3>
         </md-button>
     </div>
     <div flex ng-show="hasButton('roughfittingdispatch')">
-        <md-button ng-click="sendCommand('roughfittingdispatch')"
+        <md-button ng-click="sendCommand('out','roughfittingdispatch')"
                    class="md-raised full-width">
             <h3>Rough Fitting Dispatch</h3>
         </md-button>
     </div>
     <div flex ng-show="hasButton('outreject')">
-        <md-button ng-click="sendCommand('outreject')"
-                   class="md-raised md-warn full-width">
-            <h3>Final Inspection Reject</h3>
+        <md-button ng-click="sendCommand('out','dispatch')"
+                   class="md-raised md-success full-width">
+            <h3>Send To Dispatch</h3>
         </md-button>
     </div>
+    <div flex  ng-show="hasButton('onhold')">
+        <md-button ng-click="sendCommand('onhold')"
+                   class="md-raised full-width">
+            <h3>On Hold</h3>
+        </md-button>
+    </div>
+    <div flex ng-show="hasButton('makeactive')">
+        <md-button  ng-click="sendCommand('makeactive')"
+                   class="md-raised full-width">
+            <h3>Remove Hold</h3>
+        </md-button>
+    </div>
+
     <div flex>
         <md-button ng-click="changestate('scan home')"
                    class="md-raised full-width">
